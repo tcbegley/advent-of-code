@@ -3,7 +3,6 @@ import sys
 
 
 def parse(stream):
-    parsed = []
     n = 0
     left = 1
     for i in range(len(stream)):
@@ -12,9 +11,8 @@ def parse(stream):
         if stream[i] == "}":
             n -= 1
         if n == 0:
-            parsed.append(stream[left:i])
+            yield stream[left:i]
             left = i+2
-    return parsed
 
 
 def score(stream, n):
