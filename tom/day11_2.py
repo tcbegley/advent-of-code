@@ -8,13 +8,13 @@ def coordinate(steps):
     for step in steps:
         pos[0] += lookup[step][0]
         pos[1] += lookup[step][1]
-    return pos
+        yield pos[:]
 
 
 def answer(file_path):
     with open(file_path, 'r') as f:
         steps = f.read().strip().split(',')
-    locs = [coordinate(steps[:i]) for i in range(len(steps))]
+    locs = list(coordinate(steps))
     dists = []
     for loc in locs:
         if loc[0] * loc[1] > 0:
