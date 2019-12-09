@@ -19,11 +19,15 @@ class Particle:
 
 
 def answer(file_path):
-    with open(file_path, 'r') as f:
+    with open(file_path, "r") as f:
         particles = f.readlines()
-    particles = [[list(map(int, x.split(',')))
-                  for x in re.findall(r'<([^>]*)>', particle)]
-                 for particle in particles]
+    particles = [
+        [
+            list(map(int, x.split(",")))
+            for x in re.findall(r"<([^>]*)>", particle)
+        ]
+        for particle in particles
+    ]
     particles = dict(enumerate(Particle(*particle) for particle in particles))
     while True:
         for p in particles.values():

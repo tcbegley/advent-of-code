@@ -24,11 +24,7 @@ def answer(serial_no):
     for x in range(298):
         for y in range(298):
             total = sum(
-                [
-                    grid[x + i][y + j]
-                    for i in range(3)
-                    for j in range(3)
-                ]
+                [grid[x + i][y + j] for i in range(3) for j in range(3)]
             )
             if total > best:
                 best = total

@@ -3,9 +3,9 @@ from collections import defaultdict
 
 
 def answer(file_path):
-    with open(file_path, 'r') as f:
-        lines = f.read().strip().split('\n')
-    lines = [list(map(int, line.split(': '))) for line in lines]
+    with open(file_path, "r") as f:
+        lines = f.read().strip().split("\n")
+    lines = [list(map(int, line.split(": "))) for line in lines]
     for line in lines:
         line[1] = line[1] * 2 - 2
     layers = defaultdict(lambda: 0)

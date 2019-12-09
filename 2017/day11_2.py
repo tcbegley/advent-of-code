@@ -2,8 +2,14 @@ import sys
 
 
 def coordinate(steps):
-    lookup = {'n': (0, 1), 's': (0, -1), 'ne': (1, 0), 'nw': (-1, 1),
-              'se': (1, -1), 'sw': (-1, 0)}
+    lookup = {
+        "n": (0, 1),
+        "s": (0, -1),
+        "ne": (1, 0),
+        "nw": (-1, 1),
+        "se": (1, -1),
+        "sw": (-1, 0),
+    }
     pos = [0, 0]
     for step in steps:
         pos[0] += lookup[step][0]
@@ -12,8 +18,8 @@ def coordinate(steps):
 
 
 def answer(file_path):
-    with open(file_path, 'r') as f:
-        steps = f.read().strip().split(',')
+    with open(file_path, "r") as f:
+        steps = f.read().strip().split(",")
     locs = list(coordinate(steps))
     dists = []
     for loc in locs:

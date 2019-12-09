@@ -17,16 +17,20 @@ class Particle:
 
 
 def answer(file_path):
-    with open(file_path, 'r') as f:
+    with open(file_path, "r") as f:
         particles = f.readlines()
-    particles = [[list(map(int, x.split(',')))
-                  for x in re.findall(r'<([^>]*)>', particle)]
-                 for particle in particles]
+    particles = [
+        [
+            list(map(int, x.split(",")))
+            for x in re.findall(r"<([^>]*)>", particle)
+        ]
+        for particle in particles
+    ]
     particles = [Particle(*particle) for particle in particles]
     while True:
         for particle in particles:
             particle.update()
-        min_dist, min_loc = float('inf'), None
+        min_dist, min_loc = float("inf"), None
         for i, particle in enumerate(particles):
             dist = particle.distance()
             if dist < min_dist:

@@ -20,8 +20,8 @@ class WrappedList:
             start = i.start % self.n
             stop = i.stop % self.n
             if start >= stop:
-                self.l[start:] = v[:self.n-start]
-                self.l[:stop] = v[self.n-start:]
+                self.l[start:] = v[: self.n - start]
+                self.l[:stop] = v[self.n - start :]
             else:
                 self.l[start:stop] = v
         else:
@@ -29,14 +29,14 @@ class WrappedList:
 
 
 def answer(file_path):
-    with open(file_path, 'r') as f:
-        lengths = list(map(int, f.read().strip().split(',')))
+    with open(file_path, "r") as f:
+        lengths = list(map(int, f.read().strip().split(",")))
     w = WrappedList(list(range(256)))
     skip = 0
     pos = 0
     for l in lengths:
         if l > 1:
-            w[pos:pos+l] = list(reversed(w[pos:pos+l]))
+            w[pos : pos + l] = list(reversed(w[pos : pos + l]))
         pos += l + skip
         skip += 1
     return w[0] * w[1]

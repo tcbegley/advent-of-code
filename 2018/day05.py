@@ -14,5 +14,6 @@ def answer(path):
         polymer = pattern.sub("", polymer)
     return len(polymer)
 
+
 if __name__ == "__main__":
     print(answer(sys.argv[1]))

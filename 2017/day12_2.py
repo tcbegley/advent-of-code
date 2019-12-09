@@ -26,9 +26,9 @@ class Graph:
 
 
 def answer(file_path):
-    with open(file_path, 'r') as f:
-        tmp = [x.split(' <-> ') for x in f.readlines()]
-        edges = [(int(x[0]), list(map(int, x[1].split(', ')))) for x in tmp]
+    with open(file_path, "r") as f:
+        tmp = [x.split(" <-> ") for x in f.readlines()]
+        edges = [(int(x[0]), list(map(int, x[1].split(", ")))) for x in tmp]
     g = Graph()
     to_visit = set(edge[0] for edge in edges)
     for edge in edges:

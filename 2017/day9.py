@@ -12,19 +12,19 @@ def parse(stream):
             n -= 1
         if n == 0:
             yield stream[left:i]
-            left = i+2
+            left = i + 2
 
 
 def score(stream, n):
-    return n + sum([score(x, n+1) for x in parse(stream)])
+    return n + sum([score(x, n + 1) for x in parse(stream)])
 
 
 def answer(file_path):
-    with open(file_path, 'r') as f:
+    with open(file_path, "r") as f:
         stream = f.read().strip()
-    stream = re.sub(r'!.', '', stream)
-    stream = re.sub(r'<[^>]*>', '', stream)
-    stream = re.sub(r'[^{}]', '', stream)
+    stream = re.sub(r"!.", "", stream)
+    stream = re.sub(r"<[^>]*>", "", stream)
+    stream = re.sub(r"[^{}]", "", stream)
     return score(stream, 0)
 
 

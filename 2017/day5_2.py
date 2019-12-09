@@ -1,5 +1,5 @@
 def answer(file_path):
-    with open(file_path, 'r') as f:
+    with open(file_path, "r") as f:
         steps = list(map(int, [x.strip() for x in f.readlines()]))
     i = 0
     count = 0
@@ -18,4 +18,4 @@ def answer(file_path):
 
 
 if __name__ == "__main__":
-    print(answer('input/5.txt'))
+    print(answer("input/5.txt"))

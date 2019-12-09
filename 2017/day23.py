@@ -8,6 +8,7 @@ def convert_to_int(fn):
         if str(y) in ascii_lowercase:
             y = self.r[y]
         fn(self, x, int(y))
+
     return wrapper
 
 
@@ -43,20 +44,20 @@ class Coprocessor:
 
 
 def answer(file_path):
-    with open(file_path, 'r') as f:
-        commands = f.read().strip().split('\n')
-    commands = dict(enumerate([command.split(' ') for command in commands]))
+    with open(file_path, "r") as f:
+        commands = f.read().strip().split("\n")
+    commands = dict(enumerate([command.split(" ") for command in commands]))
     c = Coprocessor()
     while 0 <= c.i < len(commands):
         cmd = commands[c.i]
-        if cmd[0] == 'jnz':
+        if cmd[0] == "jnz":
             c.jnz(*cmd[1:])
             continue
-        elif cmd[0] == 'set':
+        elif cmd[0] == "set":
             c.s(*cmd[1:])
-        elif cmd[0] == 'sub':
+        elif cmd[0] == "sub":
             c.sub(*cmd[1:])
-        elif cmd[0] == 'mul':
+        elif cmd[0] == "mul":
             c.mul(*cmd[1:])
         c.i += 1
     return c.mul_count

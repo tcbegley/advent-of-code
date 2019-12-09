@@ -12,8 +12,8 @@ def divide(row):
 
 
 def answer(file_path):
-    with open(file_path, 'r') as f:
-        nums = [list(map(int, x.strip().split('\t'))) for x in f.readlines()]
+    with open(file_path, "r") as f:
+        nums = [list(map(int, x.strip().split("\t"))) for x in f.readlines()]
     return sum([divide(row) for row in nums])
 
 

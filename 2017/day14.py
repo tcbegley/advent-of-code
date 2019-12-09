@@ -21,8 +21,8 @@ class WrappedList:
             start = i.start % self.n
             stop = i.stop % self.n
             if start >= stop:
-                self.l[start:] = v[:self.n-start]
-                self.l[:stop] = v[self.n-start:]
+                self.l[start:] = v[: self.n - start]
+                self.l[:stop] = v[self.n - start :]
             else:
                 self.l[start:stop] = v
         else:
@@ -41,18 +41,18 @@ def knot_hash(hash_input):
     for _ in range(64):
         for l in lengths:
             if l > 1:
-                w[pos:pos+l] = list(reversed(w[pos:pos+l]))
+                w[pos : pos + l] = list(reversed(w[pos : pos + l]))
             pos += l + skip
             skip += 1
-    dense = [densify(w[16*i:16*(i+1)]) for i in range(16)]
-    return ''.join([bin(x)[2:].zfill(8) for x in dense])
+    dense = [densify(w[16 * i : 16 * (i + 1)]) for i in range(16)]
+    return "".join([bin(x)[2:].zfill(8) for x in dense])
 
 
 def answer(hash_input):
     hashes = []
     for i in range(128):
         hashes.append(
-            sum(list(map(int, knot_hash('{}-{}'.format(hash_input, i)))))
+            sum(list(map(int, knot_hash("{}-{}".format(hash_input, i)))))
         )
     return sum(hashes)
 

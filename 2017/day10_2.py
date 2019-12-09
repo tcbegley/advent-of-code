@@ -21,8 +21,8 @@ class WrappedList:
             start = i.start % self.n
             stop = i.stop % self.n
             if start >= stop:
-                self.l[start:] = v[:self.n-start]
-                self.l[:stop] = v[self.n-start:]
+                self.l[start:] = v[: self.n - start]
+                self.l[:stop] = v[self.n - start :]
             else:
                 self.l[start:stop] = v
         else:
@@ -34,7 +34,7 @@ def densify(nums):
 
 
 def answer(file_path):
-    with open(file_path, 'r') as f:
+    with open(file_path, "r") as f:
         lengths = list(map(ord, f.read().strip())) + [17, 31, 73, 47, 23]
     w = WrappedList(list(range(256)))
     skip = 0
@@ -42,11 +42,11 @@ def answer(file_path):
     for _ in range(64):
         for l in lengths:
             if l > 1:
-                w[pos:pos+l] = list(reversed(w[pos:pos+l]))
+                w[pos : pos + l] = list(reversed(w[pos : pos + l]))
             pos += l + skip
             skip += 1
-    dense = [densify(w[16*i:16*(i+1)]) for i in range(16)]
-    return ''.join([hex(x)[2:].zfill(2) for x in dense])
+    dense = [densify(w[16 * i : 16 * (i + 1)]) for i in range(16)]
+    return "".join([hex(x)[2:].zfill(2) for x in dense])
 
 
 if __name__ == "__main__":

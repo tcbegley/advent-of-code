@@ -23,7 +23,7 @@ def answer(path):
     for claim in claims:
         for i in range(claim[2]):
             for j in range(claim[3]):
-                claimed[(claim[0]+i, claim[1]+j)] += 1
+                claimed[(claim[0] + i, claim[1] + j)] += 1
 
     n_duplicates = 0
     for v in claimed.values():

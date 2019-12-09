@@ -6,10 +6,10 @@ from string import ascii_lowercase
 class Assembly:
     def __init__(self):
         self.r = defaultdict(lambda: 0)
-        self.r['last'] = None
+        self.r["last"] = None
 
     def snd(self, x):
-        self.r['last'] = self.r[x]
+        self.r["last"] = self.r[x]
 
     def s(self, x, y):
         if y in ascii_lowercase:
@@ -36,35 +36,35 @@ class Assembly:
             self.r[x] %= int(y)
 
     def rcv(self):
-        return self.r['last']
+        return self.r["last"]
 
 
 def answer(file_path):
-    with open(file_path, 'r') as f:
-        commands = f.read().strip().split('\n')
-    commands = dict(enumerate([cmd.split(' ') for cmd in commands]))
+    with open(file_path, "r") as f:
+        commands = f.read().strip().split("\n")
+    commands = dict(enumerate([cmd.split(" ") for cmd in commands]))
     a = Assembly()
     i = 0
     while i >= 0 and i < len(commands):
         cmd = commands[i]
-        if cmd[0] == 'jgz' and a.r[cmd[1]] > 0:
+        if cmd[0] == "jgz" and a.r[cmd[1]] > 0:
             if str(cmd[2]) in ascii_lowercase:
                 i += a.r[cmd[2]]
             else:
                 i += int(cmd[2])
             continue
         i += 1
-        if cmd[0] == 'snd':
+        if cmd[0] == "snd":
             a.snd(cmd[1])
-        if cmd[0] == 'set':
+        if cmd[0] == "set":
             a.s(*cmd[1:])
-        if cmd[0] == 'add':
+        if cmd[0] == "add":
             a.add(*cmd[1:])
-        if cmd[0] == 'mul':
+        if cmd[0] == "mul":
             a.mul(*cmd[1:])
-        if cmd[0] == 'mod':
+        if cmd[0] == "mod":
             a.mod(*cmd[1:])
-        if cmd[0] == 'rcv':
+        if cmd[0] == "rcv":
             rcv = a.rcv()
             if rcv:
                 return rcv

@@ -3,27 +3,27 @@ from collections import defaultdict
 
 
 def extract(line):
-    components = line.split(' ')
-    inc_map = {'inc': 1, 'dec': -1}
+    components = line.split(" ")
+    inc_map = {"inc": 1, "dec": -1}
     return (
         components[0],
         inc_map[components[1]] * int(components[2]),
-        (components[4], components[5], int(components[6]))
+        (components[4], components[5], int(components[6])),
     )
 
 
 def comp(x, op, y):
-    if op == '>':
+    if op == ">":
         return x > y
-    if op == '>=':
+    if op == ">=":
         return x >= y
-    if op == '==':
+    if op == "==":
         return x == y
-    if op == '<':
+    if op == "<":
         return x < y
-    if op == '<=':
+    if op == "<=":
         return x <= y
-    if op == '!=':
+    if op == "!=":
         return x != y
     return False
 
@@ -36,8 +36,8 @@ def update(register, lines):
 
 
 def answer(file_path):
-    with open(file_path, 'r') as f:
-        lines = f.read().strip().split('\n')
+    with open(file_path, "r") as f:
+        lines = f.read().strip().split("\n")
     lines = list(map(extract, lines))
     register = defaultdict(lambda: 0)
     update(register, lines)
