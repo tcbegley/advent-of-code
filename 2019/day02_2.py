@@ -1,5 +1,7 @@
 import sys
 
+from intcode import IntCodeComputer
+
 
 def answer(path, target=19690720):
     def run_program(noun, verb):
@@ -9,23 +11,10 @@ def answer(path, target=19690720):
         program[1] = noun
         program[2] = verb
 
-        def op1(in1, in2, in3):
-            program[in3] = program[in1] + program[in2]
+        i = IntCodeComputer(program)
+        i.compute()
 
-        def op2(in1, in2, in3):
-            program[in3] = program[in1] * program[in2]
-
-        i = 0
-
-        while program[i] != 99:
-            if program[i] == 1:
-                op1(*program[i + 1 : i + 4])
-            elif program[i] == 2:
-                op2(*program[i + 1 : i + 4])
-
-            i += 4
-
-        return program[0]
+        return i.program[0]
 
     for i in range(100):
         for j in range(100):
