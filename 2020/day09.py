@@ -1,6 +1,11 @@
 import sys
 
 
+def load_data(path):
+    with open(path) as f:
+        return [int(n) for n in f.read().strip().split()]
+
+
 def check_sum(n, lst):
     mn = min(lst)
     mx = max(lst)
@@ -17,17 +22,35 @@ def check_sum(n, lst):
     return False
 
 
-def answer(path):
-    with open(path) as f:
-        numbers = [int(n) for n in f.read().strip().split()]
+def search(target, numbers):
+    left = 0
+    right = 1
 
-    i = 25
+    while (x := sum(numbers[left:right])) != target:
+        if x < target:
+            right += 1
+        else:
+            left += 1
 
-    while check_sum(numbers[i], numbers[i - 25 : i]):
+    return numbers[left:right]
+
+
+def part_1(numbers, offset=25):
+    i = offset
+
+    while check_sum(numbers[i], numbers[i - offset : i]):
         i += 1
 
     return numbers[i]
 
 
+def part_2(target, numbers):
+    seq = search(target, numbers)
+    return min(seq) + max(seq)
+
+
 if __name__ == "__main__":
-    print(answer(sys.argv[1]))
+    numbers = load_data(sys.argv[1])
+    part_1_ans = part_1(numbers)
+    print(f"Part 1: {part_1_ans}")
+    print(f"Part 2: {part_2(part_1_ans, numbers)}")
