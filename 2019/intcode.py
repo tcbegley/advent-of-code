@@ -79,14 +79,14 @@ class IntCodeComputer:
             self._c += 3
 
     def jump_if_false(self, modes):
-        p1, p2 = self.program[self._c + 1: self._c + 3]
+        p1, p2 = self.program[self._c + 1 : self._c + 3]
         if self.get_value(p1, modes[0]) == 0:
             self._c = self.get_value(p2, modes[1])
         else:
             self._c += 3
 
     def less_than(self, modes):
-        p1, p2, p3 = self.program[self._c + 1: self._c + 4]
+        p1, p2, p3 = self.program[self._c + 1 : self._c + 4]
         if self.get_value(p1, modes[0]) < self.get_value(p2, modes[1]):
             self.program[p3] = 1
         else:
@@ -94,7 +94,7 @@ class IntCodeComputer:
         self._c += 4
 
     def equals(self, modes):
-        p1, p2, p3 = self.program[self._c + 1: self._c + 4]
+        p1, p2, p3 = self.program[self._c + 1 : self._c + 4]
         if self.get_value(p1, modes[0]) == self.get_value(p2, modes[1]):
             self.program[p3] = 1
         else:
