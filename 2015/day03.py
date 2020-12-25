@@ -2,10 +2,12 @@ import sys
 from collections import defaultdict
 
 
-def answer(path):
+def load_data(path):
     with open(path) as f:
-        dirs = f.read().strip()
+        return f.read().strip()
 
+
+def deliver(dirs):
     houses = defaultdict(lambda: 0)
 
     x, y = 0, 0
@@ -22,8 +24,21 @@ def answer(path):
             x -= 1
         houses[(x, y)] += 1
 
-    return len(houses)
+    return houses
+
+
+def part_1(dirs):
+    return len(deliver(dirs))
+
+
+def part_2(dirs):
+    houses = deliver([d for i, d in enumerate(dirs) if i % 2 == 0])
+    rhouses = deliver([d for i, d in enumerate(dirs) if i % 2 == 1])
+
+    return len(set(houses.keys()) | set(rhouses.keys()))
 
 
 if __name__ == "__main__":
-    print(answer(sys.argv[1]))
+    dirs = load_data(sys.argv[1])
+    print(f"Part 1: {part_1(dirs)}")
+    print(f"Part 2: {part_2(dirs)}")
