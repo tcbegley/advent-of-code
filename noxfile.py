@@ -9,4 +9,4 @@ def lint(session):
     session.install("black", "flake8", "isort")
     session.run("black", "--check", *SOURCES)
     session.run("flake8", *SOURCES)
-    session.run("isort", "--check", "--recursive", *SOURCES)
+    session.run("isort", "--check", *SOURCES)
