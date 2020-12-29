@@ -11,6 +11,11 @@ class Node:
         self.total = None
 
 
+def load_data(path):
+    with open(path) as f:
+        return [extract(line.strip()) for line in f.readlines()]
+
+
 def extract(line):
     line = line.split(" -> ")
     if len(line) > 1:
@@ -18,7 +23,7 @@ def extract(line):
     else:
         children = []
     parent, val = line[0].split(" ")
-    val = int(val[1:-1])
+    val = int(val.strip("()"))
     return parent, val, children
 
 
@@ -33,10 +38,12 @@ def make_tree(node, val_lookup, child_lookup):
     )
 
 
-def get_root(lines):
-    nodes = set([line[0] for line in lines])
-    children = set(reduce(lambda x, y: x + y, [line[2] for line in lines]))
-    return list(nodes - children)[0]
+def get_root(nodes):
+    parents = set(node[0] for node in nodes)
+    children = set(
+        list(reduce(lambda x, y: x + y, [node[2] for node in nodes]))
+    )
+    return next(iter(parents - children))
 
 
 def gen_totals(node):
@@ -58,16 +65,19 @@ def search(tree):
     return val
 
 
-def answer(file_path):
-    with open(file_path, "r") as f:
-        lines = f.read().strip().split("\n")
-    lines = list(map(extract, lines))
-    val_lookup = dict((line[0], line[1]) for line in lines)
-    child_lookup = dict((line[0], line[2]) for line in lines)
-    tree = make_tree(get_root(lines), val_lookup, child_lookup)
+def part_1(nodes):
+    return get_root(nodes)
+
+
+def part_2(nodes):
+    val_lookup = {node[0]: node[1] for node in nodes}
+    child_lookup = {node[0]: node[2] for node in nodes}
+    tree = make_tree(get_root(nodes), val_lookup, child_lookup)
     gen_totals(tree)
     return search(tree)
 
 
 if __name__ == "__main__":
-    print(answer(sys.argv[1]))
+    nodes = load_data(sys.argv[1])
+    print(f"Part 1: {part_1(nodes)}")
+    print(f"Part 2: {part_2(nodes)}")

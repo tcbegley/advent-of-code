@@ -2,8 +2,13 @@ import sys
 from collections import defaultdict
 
 
+def load_data(path):
+    with open(path) as f:
+        return [extract(line) for line in f.readlines()]
+
+
 def extract(line):
-    components = line.split(" ")
+    components = line.strip().split(" ")
     inc_map = {"inc": 1, "dec": -1}
     return (
         components[0],
@@ -39,13 +44,18 @@ def update(register, lines):
     return max_val
 
 
-def answer(file_path):
-    with open(file_path, "r") as f:
-        lines = f.read().strip().split("\n")
-    lines = list(map(extract, lines))
+def part_1(instructions):
     register = defaultdict(lambda: 0)
-    return update(register, lines)
+    update(register, instructions)
+    return max(register.values())
+
+
+def part_2(instructions):
+    register = defaultdict(lambda: 0)
+    return update(register, instructions)
 
 
 if __name__ == "__main__":
-    print(answer(sys.argv[1]))
+    instructions = load_data(sys.argv[1])
+    print(f"Part 1: {part_1(instructions)}")
+    print(f"Part 2: {part_2(instructions)}")
