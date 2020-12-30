@@ -11,30 +11,56 @@ class Graph:
         self.graph[v].add(u)
 
     def bfs(self, start):
-        visited = defaultdict(lambda: False)
+        visited = set()
 
         queue = [start]
-        visited[start] = True
+        visited.add(start)
 
         while queue:
             s = queue.pop(0)
             for i in self.graph[s]:
-                if not visited[i]:
-                    visited[i] = True
+                if i not in visited:
+                    visited.add(i)
                     queue.append(i)
-        return len(visited.keys())
+
+        return visited
 
 
-def answer(file_path):
-    with open(file_path, "r") as f:
-        tmp = [x.split(" <-> ") for x in f.readlines()]
-        edges = [(int(x[0]), list(map(int, x[1].split(", ")))) for x in tmp]
+def load_data(path):
+    with open(path) as f:
+        return [process_line(line) for line in f.readlines()]
+
+
+def process_line(line):
+    root, nbrs = line.split(" <-> ")
+    return int(root), [int(nbr) for nbr in nbrs.split(", ")]
+
+
+def build_graph(edges):
     g = Graph()
-    for edge in edges:
-        for v in edge[1]:
-            g.add_edge(edge[0], v)
-    return g.bfs(0)
+    for u, vs in edges:
+        for v in vs:
+            g.add_edge(u, v)
+    return g
+
+
+def part_1(edges):
+    g = build_graph(edges)
+    return len(g.bfs(0))
+
+
+def part_2(edges):
+    g = build_graph(edges)
+    to_visit = {edge[0] for edge in edges}
+    count = 0
+    while to_visit:
+        start = to_visit.pop()
+        to_visit = to_visit - g.bfs(start)
+        count += 1
+    return count
 
 
 if __name__ == "__main__":
-    print(answer(sys.argv[1]))
+    edges = load_data(sys.argv[1])
+    print(f"Part 1: {part_1(edges)}")
+    print(f"Part 2: {part_2(edges)}")
