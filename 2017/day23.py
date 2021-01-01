@@ -3,6 +3,11 @@ from collections import defaultdict
 from string import ascii_lowercase
 
 
+def load_data(path):
+    with open(path) as f:
+        return f.read().strip().split("\n")
+
+
 def convert_to_int(fn):
     def wrapper(self, x, y):
         if str(y) in ascii_lowercase:
@@ -43,9 +48,7 @@ class Coprocessor:
             self.i += 1
 
 
-def answer(file_path):
-    with open(file_path, "r") as f:
-        commands = f.read().strip().split("\n")
+def part_1(commands):
     commands = dict(enumerate([command.split(" ") for command in commands]))
     c = Coprocessor()
     while 0 <= c.i < len(commands):
@@ -63,5 +66,29 @@ def answer(file_path):
     return c.mul_count
 
 
+def part_2():
+    # hard coded version of my input...
+    b = 57
+    c = b
+    b *= 100
+    b += 100000
+    c = b
+    c += 17000
+    h = 0
+    for b in range(105700, 122701, 17):
+        f = 1
+        d = 2
+        for d in range(2, b):
+            if b % d == 0:
+                f = 0
+                break
+        if f == 0:
+            h += 1
+
+    return h
+
+
 if __name__ == "__main__":
-    print(answer(sys.argv[1]))
+    commands = load_data(sys.argv[1])
+    print(f"Part 1: {part_1(commands)}")
+    print(f"Part 2: {part_2()}")

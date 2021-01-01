@@ -1,14 +1,28 @@
 import sys
+from itertools import chain
 
-import numpy as np
+
+def load_data(path):
+    with open(path) as f:
+        return dict(
+            line.split(" => ") for line in f.read().strip().split("\n")
+        )
 
 
 def to_array(string):
-    return np.array([[c for c in s] for s in string.split("/")])
+    return [[c for c in s] for s in string.split("/")]
 
 
 def to_string(arr):
     return "/".join("".join(map(str, row)) for row in arr)
+
+
+def concatenate_blocks(blocks):
+    return list(
+        chain(
+            *[[list(chain(*rows)) for rows in zip(*block)] for block in blocks]
+        )
+    )
 
 
 def gen_flips(k):
@@ -45,20 +59,21 @@ def permute(lookup):
     lookup.update(new)
 
 
-def answer(file_path):
-    with open(file_path, "r") as f:
-        lookup = dict(
-            line.split(" => ") for line in f.read().strip().split("\n")
-        )
+def iterate(lookup, iterations):
     permute(lookup)
     fractal = ".#./..#/###"
-    for i in range(5):
+    for i in range(iterations):
         fractal = to_array(fractal)
         size = len(fractal)
         if size % 2 == 0:
             blocks = [
                 [
-                    to_string(fractal[i : i + 2, j : j + 2])
+                    to_string(
+                        [
+                            [fractal[row][col] for col in range(j, j + 2)]
+                            for row in range(i, i + 2)
+                        ]
+                    )
                     for j in range(0, size, 2)
                 ]
                 for i in range(0, size, 2)
@@ -66,17 +81,30 @@ def answer(file_path):
         else:
             blocks = [
                 [
-                    to_string(fractal[i : i + 3, j : j + 3])
+                    to_string(
+                        [
+                            [fractal[row][col] for col in range(j, j + 3)]
+                            for row in range(i, i + 3)
+                        ]
+                    )
                     for j in range(0, size, 3)
                 ]
                 for i in range(0, size, 3)
             ]
         blocks = [[to_array(lookup[s]) for s in row] for row in blocks]
-        fractal = to_string(
-            np.concatenate([np.concatenate(row, axis=1) for row in blocks])
-        )
+        fractal = to_string(concatenate_blocks(blocks))
     return fractal.count("#")
 
 
+def part_1(lookup):
+    return iterate(lookup, 5)
+
+
+def part_2(lookup):
+    return iterate(lookup, 18)
+
+
 if __name__ == "__main__":
-    print(answer(sys.argv[1]))
+    lookup = load_data(sys.argv[1])
+    print(f"Part 1: {part_1(lookup)}")
+    print(f"Part 2: {part_2(lookup)}")

@@ -1,5 +1,3 @@
-import re
-import sys
 from collections import defaultdict
 
 
@@ -31,10 +29,10 @@ class TuringMachine:
         return sum(self.tape.values())
 
 
-def answer():
+def part_1():
     tm = TuringMachine()
     return tm.run()
 
 
 if __name__ == "__main__":
-    print(answer())
+    print(f"Part 1: {part_1()}")
