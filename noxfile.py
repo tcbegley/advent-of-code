@@ -1,6 +1,6 @@
 import nox
 
-SOURCES = ["2015", "2017", "2020", "noxfile.py"]
+SOURCES = ["2015", "2016", "2017", "2020", "noxfile.py"]
 
 
 @nox.session()
