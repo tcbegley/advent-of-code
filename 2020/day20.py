@@ -132,7 +132,7 @@ def assemble_tiles(tiles):
     visited = set()
     tiles = tiles[1:]
 
-    while (to_visit := set(image.keys()) - visited) :
+    while to_visit := set(image.keys()) - visited:
         for loc in to_visit:
             visited.add(loc)
 

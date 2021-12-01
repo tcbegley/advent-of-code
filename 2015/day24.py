@@ -32,7 +32,7 @@ def pack(weights, target, packed=(), max_length=float("inf"), qe=float("inf")):
 def find_best_qe(weights, target):
     max_length, qe = float("inf"), float("inf")
 
-    while (candidate := pack(weights, target, max_length=max_length, qe=qe)) :
+    while candidate := pack(weights, target, max_length=max_length, qe=qe):
         max_length = len(candidate)
         qe = reduce(lambda a, b: a * b, candidate)
 
