@@ -6,12 +6,16 @@ def load_data(path):
         return [int(n) for n in f.read().strip().split("\n")]
 
 
+def answer(depths, offset=1):
+    return sum(d2 > d1 for d2, d1 in zip(depths[offset:], depths))
+
+
 def part_1(depths):
-    return sum(d2 > d1 for d2, d1 in zip(depths[1:], depths))
+    return answer(depths)
 
 
 def part_2(depths):
-    return sum(d2 > d1 for d2, d1 in zip(depths[3:], depths))
+    return answer(depths, offset=3)
 
 
 if __name__ == "__main__":
