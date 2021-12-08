@@ -14,39 +14,16 @@ def part_1(positions):
 
 
 def part_2(positions):
-    # We have a triangular cost function which is approximately quadratic,
-    # hence the answer will be close to the mean
-
-    # the gradient wrt the position _at the mean_ is
-
-    # 0.5 * sgn(\bar{x} - x_i)
-
-    # this is negative if there are more x_i's greater than the mean than there
-    # are x_i's less than the mean. hence to decrease the loss we should test
-    # positions greater than the mean in the former case, and less than the
-    # mean in the latter case. We know that the cost is convex, so we can just
-    # test positions incrementing / decrementing by 1 each time until we see
-    # the first increase in cost.
     def cost(position):
         return sum(
             ((p - position) ** 2 + abs(p - position)) // 2 for p in positions
         )
 
+    # can prove that best position is always within distance 1 of the mean
+    # hence take integer part of mean and add 1 to check integers either side
+    # of the mean
     mean = int(sum(positions) / len(positions))
-
-    min_cost = cost(mean)
-    if sum(p > mean for p in positions) >= 0:
-        step = 1
-    else:
-        step = -1
-
-    position = mean + step
-
-    while (new_cost := cost(position)) < min_cost:
-        min_cost = new_cost
-        position += step
-
-    return min_cost
+    return min(cost(mean), cost(mean + 1))
 
 
 if __name__ == "__main__":
