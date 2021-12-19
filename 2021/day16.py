@@ -6,10 +6,12 @@ from typing import Optional
 
 def load_data(path):
     with open(path) as f:
-        data = bin(int(f.read().strip(), base=16)).removeprefix("0b")
+        hex_data = f.read().strip()
+
+    data = bin(int(hex_data, base=16)).removeprefix("0b")
 
     # need to account for leading zeros
-    num_bits = ((len(data) - 1) // 4 + 1) * 4
+    num_bits = len(hex_data) * 4
     return data.zfill(num_bits)
 
 
