@@ -13,25 +13,27 @@ def load_data(path):
 def part_1(directions):
     horizontal, depth = 0, 0
     for cmd, num in directions:
-        if cmd == "forward":
-            horizontal += num
-        elif cmd == "down":
-            depth += num
-        elif cmd == "up":
-            depth -= num
+        match cmd:
+            case "forward":
+                horizontal += num
+            case "down":
+                depth += num
+            case "up":
+                depth -= num
     return horizontal * depth
 
 
 def part_2(directions):
     horizontal, depth, aim = 0, 0, 0
     for cmd, num in directions:
-        if cmd == "forward":
-            horizontal += num
-            depth += num * aim
-        elif cmd == "down":
-            aim += num
-        elif cmd == "up":
-            aim -= num
+        match cmd:
+            case "forward":
+                horizontal += num
+                depth += num * aim
+            case "down":
+                aim += num
+            case "up":
+                aim -= num
     return horizontal * depth
 
 
