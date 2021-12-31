@@ -1,6 +1,11 @@
 import sys
 
 
+class Registers(dict):
+    def __missing__(self, key):
+        return int(key)
+
+
 def load_data(path):
     def process_line(line):
         cmd, *args = line.strip().split(" ")
@@ -15,35 +20,27 @@ def process_instructions(registers, instructions):
     while loc < len(instructions):
         cmd, args = instructions[loc]
         if cmd == "cpy":
-            if args[0] in registers:
-                registers[args[1]] = registers[args[0]]
-            else:
-                registers[args[1]] = int(args[0])
+            registers[args[1]] = registers[args[0]]
         elif cmd == "inc":
             registers[args[0]] += 1
         elif cmd == "dec":
             registers[args[0]] -= 1
         elif cmd == "jnz":
-            if args[0] in registers:
-                if registers[args[0]] != 0:
-                    loc += int(args[1])
-                    continue
-            else:
-                if args[0] != "0":
-                    loc += int(args[1])
-                    continue
+            if registers[args[0]] != 0:
+                loc += registers[args[1]]
+                continue
         loc += 1
 
     return registers["a"]
 
 
 def part_1(instructions):
-    registers = {"a": 0, "b": 0, "c": 0, "d": 0}
+    registers = Registers({"a": 0, "b": 0, "c": 0, "d": 0})
     return process_instructions(registers, instructions)
 
 
 def part_2(instructions):
-    registers = {"a": 0, "b": 0, "c": 1, "d": 0}
+    registers = Registers({"a": 0, "b": 0, "c": 1, "d": 0})
     return process_instructions(registers, instructions)
 
 
