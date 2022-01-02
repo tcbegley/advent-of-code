@@ -1,37 +1,47 @@
 import re
 import sys
-from collections import defaultdict
+from collections import Counter
+
+CLAIM_PATTERN = re.compile(r"#(\d+) @ (\d+),(\d+): (\d+)x(\d+)")
 
 
-def answer(path):
+def load_data(path):
     with open(path) as f:
-        claims_raw = f.read().strip().split("\n")
-    claims = []
-    for c in claims_raw:
-        m = re.search(r"@ (\d+),(\d+): (\d+)x(\d+)", c)
-        claims.append(
-            (
-                int(m.group(1)),
-                int(m.group(2)),
-                int(m.group(3)),
-                int(m.group(4)),
-            )
-        )
+        return [
+            (id_, int(x0), int(y0), int(x_len), int(y_len))
+            for id_, x0, y0, x_len, y_len in CLAIM_PATTERN.findall(f.read())
+        ]
 
-    claimed = defaultdict(lambda: 0)
 
-    for claim in claims:
-        for i in range(claim[2]):
-            for j in range(claim[3]):
-                claimed[(claim[0] + i, claim[1] + j)] += 1
+def get_counts(claims):
+    counts = Counter()
 
-    n_duplicates = 0
-    for v in claimed.values():
-        if v > 1:
-            n_duplicates += 1
+    for (_, x0, y0, x_len, y_len) in claims:
+        for x in range(x0, x0 + x_len):
+            for y in range(y0, y0 + y_len):
+                counts[(x, y)] += 1
 
-    return n_duplicates
+    return counts
+
+
+def part_1(claims):
+    counts = get_counts(claims)
+    return sum(v > 1 for v in counts.values())
+
+
+def part_2(claims):
+    counts = get_counts(claims)
+
+    for (id_, x0, y0, x_len, y_len) in claims:
+        if all(
+            counts[(x, y)] == 1
+            for x in range(x0, x0 + x_len)
+            for y in range(y0, y0 + y_len)
+        ):
+            return id_
 
 
 if __name__ == "__main__":
-    print(answer(sys.argv[1]))
+    claims = load_data(sys.argv[1])
+    print(f"Part 1: {part_1(claims)}")
+    print(f"Part 2: {part_2(claims)}")
