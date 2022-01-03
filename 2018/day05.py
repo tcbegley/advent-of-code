@@ -1,19 +1,40 @@
-import re
 import sys
 from string import ascii_lowercase, ascii_uppercase
 
+REACT = dict(zip(ascii_uppercase, ascii_lowercase)) | dict(
+    zip(ascii_lowercase, ascii_uppercase)
+)
 
-def answer(path):
+
+def load_data(path):
     with open(path) as f:
-        polymer = f.read().strip()
-    remove = [f"{a}{b}" for a, b in zip(ascii_lowercase, ascii_uppercase)] + [
-        f"{a}{b}" for a, b in zip(ascii_uppercase, ascii_lowercase)
-    ]
-    pattern = re.compile("|".join(remove))
-    while pattern.search(polymer):
-        polymer = pattern.sub("", polymer)
-    return len(polymer)
+        return f.read().strip()
+
+
+def react(polymer, skip=None):
+    stack = []
+    for c in polymer:
+        if skip is not None and c in skip:
+            continue
+        elif stack and REACT[c] == stack[-1]:
+            stack.pop()
+        else:
+            stack.append(c)
+
+    return len(stack)
+
+
+def part_1(polymer):
+    return react(polymer)
+
+
+def part_2(polymer):
+    return min(
+        react(polymer, skip) for skip in zip(ascii_uppercase, ascii_lowercase)
+    )
 
 
 if __name__ == "__main__":
-    print(answer(sys.argv[1]))
+    data = load_data(sys.argv[1])
+    print(f"Part 1: {part_1(data)}")
+    print(f"Part 2: {part_2(data)}")
