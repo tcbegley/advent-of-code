@@ -35,7 +35,7 @@ class UnionFind:
                 self.size[root1] += self.size[root2]
                 self.id[root2] = root1
 
-            self.num_components += 1
+            self.num_components -= 1
 
 
 def load_data(path):
