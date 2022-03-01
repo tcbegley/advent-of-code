@@ -35,7 +35,7 @@ def part_2(blacklist):
                 counts[(low, high)] -= count
         counts[(low1, high1)] += 1
 
-    return 2 ** 32 - sum(
+    return 2**32 - sum(
         (high - low + 1) * count for (low, high), count in counts.items()
     )
 

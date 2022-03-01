@@ -54,7 +54,7 @@ def part_2(commands):
         if s == "abcdefghijklmnop":
             break
 
-    for i in range(10 ** 9 % i):
+    for i in range(10**9 % i):
         for cmd in commands:
             s = moves[cmd[0]](s, cmd[1:])
 
