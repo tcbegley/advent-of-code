@@ -70,7 +70,7 @@ def part_1(caves):
 
 def part_2(caves):
     n_rows, n_cols = len(caves), len(caves[0])
-    union_find = UnionFind(len(caves), len(caves[0]))
+    union_find = UnionFind(n_rows, n_cols)
 
     for row in range(n_rows):
         for col in range(n_cols):
