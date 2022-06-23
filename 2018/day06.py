@@ -1,45 +1,94 @@
 import sys
-from collections import defaultdict
+from collections import deque
 
 
-def answer(path):
+class UnionFind:
+    def __init__(self, x_range, y_range):
+        x_min, x_max = x_range
+        y_min, y_max = y_range
+
+        self.num_components = (x_max - x_min + 1) * (y_max - y_min + 1) + 1
+        self.id = {
+            (x, y): (x, y)
+            for x in range(x_min, x_max + 1)
+            for y in range(y_min, y_max + 1)
+        }
+        self.id[None] = None
+        self.size = {
+            (x, y): 1
+            for x in range(x_min, x_max + 1)
+            for y in range(y_min, y_max + 1)
+        }
+        self.size[None] = 1
+
+    def find(self, loc):
+        root = loc
+        while root != self.id[root]:
+            root = self.id[root]
+
+        # path compression
+        while loc != root:
+            next_ = self.id[loc]
+            self.id[loc] = root
+            loc = next_
+
+        return root
+
+    def component_size(self, loc):
+        return self.size[self.find(loc)]
+
+    def unify(self, loc1, loc2):
+        root1 = self.find(loc1)
+        root2 = self.find(loc2)
+
+        if root1 != root2:
+            if root2 is None or (
+                root1 is not None and self.size[root1] < self.size[root2]
+            ):
+                self.size[root2] += self.size[root1]
+                self.id[root1] = root2
+            else:
+                self.size[root1] += self.size[root2]
+                self.id[root2] = root1
+
+            self.num_components -= 1
+
+
+def load_data(path):
     with open(path) as f:
-        coords = [
-            [int(i) for i in c.split(",")]
-            for c in f.read().strip().split(("\n"))
-        ]
-    x = (
+        return [tuple(map(int, row.split(","))) for row in f.readlines()]
+
+
+def get_neighbours(x, y, x_min, x_max, y_min, y_max):
+    for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
+        if x_min <= x + dx <= x_max and y_min <= y + dy <= y_max:
+            yield x + dx, y + dy
+
+
+def part_1(coords):
+    x_min, x_max = (
         min(coords, key=lambda c: c[0])[0],
         max(coords, key=lambda c: c[0])[0],
     )
-    y = (
+    y_min, y_max = (
         min(coords, key=lambda c: c[1])[1],
         max(coords, key=lambda c: c[1])[1],
     )
 
+    queue = deque(coords)
+    next_queue = deque()
+    visited_this_iteration = set()
     grid = {}
 
-    for i in range(x[0], x[1] + 1):
-        for j in range(y[0], y[1] + 1):
-            grid[(i, j)] = [abs(i - c[0]) + abs(j - c[1]) for c in coords]
+    while queue:
+        pass
 
-    counts = defaultdict(lambda: 0)
-    disqualified = set()
 
-    for loc, dists in grid.items():
-        mn = min(dists)
-        if dists.count(mn) == 1:
-            counts[dists.index(mn)] += 1
-            if loc[0] in x or loc[1] in y:
-                disqualified.add(dists.index(mn))
-
-    most = 0
-    for loc, count in counts.items():
-        if loc not in disqualified and count > most:
-            most = count
-
-    return most
+def part_2(coords):
+    pass
 
 
 if __name__ == "__main__":
-    print(answer(sys.argv[1]))
+    coords = load_data(sys.argv[1])
+    print(f"Part 1: {part_1(coords)}")
+    print(f"Part 2: {part_2(coords)}")
