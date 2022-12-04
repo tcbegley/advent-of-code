@@ -1,35 +1,26 @@
 import re
 import sys
 
+DATA_PATTERN = re.compile(r"Step ([A-Z]).*step ([A-Z])")
 
-def answer(path):
+
+def load_data(path):
     with open(path) as f:
-        instructions_raw = f.read().strip().split("\n")
-    instructions = []
-    for i in instructions_raw:
-        m = re.match("Step ([A-Z]).*step ([A-Z])", i)
-        instructions.append((m.group(1), m.group(2)))
+        return [
+            DATA_PATTERN.match(row).groups()
+            for row in f.read().strip().split("\n")
+        ]
 
-    steps = []
-    for i in instructions:
-        steps.extend(i)
 
-    dependencies = {s: set() for s in set(steps)}
+def part_1(data):
+    pass
 
-    for i in instructions:
-        dependencies[i[1]].add(i[0])
 
-    out = ""
-    while dependencies:
-        i = min([k for k, v in dependencies.items() if len(v) == 0])
-        out += i
-        dependencies.pop(i)
-        for v in dependencies.values():
-            if i in v:
-                v.remove(i)
-
-    return out
+def part_2(data):
+    pass
 
 
 if __name__ == "__main__":
-    print(answer(sys.argv[1]))
+    data = load_data(sys.argv[1])
+    print(f"Part 1: {part_1(data)}")
+    print(f"Part 2: {part_2(data)}")
