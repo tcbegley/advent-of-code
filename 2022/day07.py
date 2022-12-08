@@ -8,66 +8,47 @@ class Node:
     def __init__(self, parent=None):
         self.parent = parent
         self.children = {}
-        self.files = {}
+        self.size = 0
 
 
 def load_data(path):
     with open(path) as f:
-        data = [row.split(" ") for row in f.read().strip().split("\n")]
+        commands = [row.split(" ") for row in f.read().strip().split("\n")]
 
-    root = Node()
-    pwd = root
+    pwd = root = Node()
 
-    for row in data:
-        if row[0] == "$":
-            if row[1] == "cd":
-                if row[2] == "..":
-                    pwd = pwd.parent
-                elif row[2] == "/":
-                    pwd = root
-                else:
-                    pwd = pwd.children[row[2]]
-        else:
-            if row[0] == "dir":
-                if row[1] not in pwd.children:
-                    pwd.children[row[1]] = Node(pwd)
-            else:
-                pwd.files[row[1]] = int(row[0])
+    for cmd in commands:
+        match cmd:
+            case ["$", "cd", "/"]:
+                pwd = root
+            case ["$", "cd", ".."]:
+                pwd = pwd.parent
+            case ["$", "cd", dir_]:
+                pwd = pwd.children.setdefault(dir_, Node(pwd))
+            case ["$", "ls"] | ["dir", _]:
+                pass
+            case [size, _]:
+                node, size = pwd, int(size)
+                while node is not None:
+                    node.size += size
+                    node = node.parent
 
     return root
 
 
+def get_sizes(node):
+    yield node.size
+    for child in node.children.values():
+        yield from get_sizes(child)
+
+
 def part_1(root):
-    total = 0
-
-    def get_total_size(node):
-        total_size = sum(node.files.values()) + sum(
-            get_total_size(child) for child in node.children.values()
-        )
-        if total_size <= 100_000:
-            nonlocal total
-            total += total_size
-        return total_size
-
-    get_total_size(root)
-
-    return total
+    return sum(size for size in get_sizes(root) if size <= 100_000)
 
 
 def part_2(root):
-    total = []
-
-    def get_total_size(node):
-        total_size = sum(node.files.values()) + sum(
-            get_total_size(child) for child in node.children.values()
-        )
-        nonlocal total
-        total.append(total_size)
-        return total_size
-
-    target_size = DESIRED_SPACE - (AVAILABLE_SPACE - get_total_size(root))
-
-    return min(t for t in total if t > target_size)
+    target_size = DESIRED_SPACE - (AVAILABLE_SPACE - root.size)
+    return min(size for size in get_sizes(root) if size > target_size)
 
 
 if __name__ == "__main__":
