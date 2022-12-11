@@ -3,40 +3,55 @@ import sys
 
 class Node:
     def __init__(self, children, metadata):
-        self.metadata = metadata
         self.children = children
+        self.metadata = metadata
 
 
-def build_tree(numbers):
-    n_children = numbers[0]
-    n_metadata = numbers[1]
-    numbers = numbers[2:]
+def load_data(path):
+    with open(path) as f:
+        data = map(int, f.read().strip().split(" "))
+
+    root, data = parse_node(data)
+    if data:
+        raise RuntimeError("Error parsing data")
+
+    return root
+
+
+def parse_node(data):
+    n_children, n_metadata, *data = data
     children = []
-    for i in range(n_children):
-        numbers, node = build_tree(numbers)
+    for _ in range(n_children):
+        node, data = parse_node(data)
         children.append(node)
-    node = Node(children=children, metadata=numbers[:n_metadata])
-    return numbers[n_metadata:], node
+    return Node(children, data[:n_metadata]), data[n_metadata:]
 
 
 def sum_metadata(node):
-    total = sum(node.metadata)
-    for child in node.children:
-        total += sum_metadata(child)
-    return total
+    return sum(node.metadata) + sum(
+        sum_metadata(child) for child in node.children
+    )
 
 
-def answer(path):
-    with open(path) as f:
-        numbers = [int(i) for i in f.read().strip().split(" ")]
+def part_1(root):
+    return sum_metadata(root)
 
-    (numbers, tree) = build_tree(numbers)
 
-    if numbers:
-        raise RuntimeError("Something went wrong with tree parsing")
+def value(node):
+    if node.children:
+        return sum(
+            value(node.children[i - 1])
+            for i in node.metadata
+            if 1 <= i <= len(node.children)
+        )
+    return sum(node.metadata)
 
-    return sum_metadata(tree)
+
+def part_2(root):
+    return value(root)
 
 
 if __name__ == "__main__":
-    print(answer(sys.argv[1]))
+    root = load_data(sys.argv[1])
+    print(f"Part 1: {part_1(root)}")
+    print(f"Part 2: {part_2(root)}")
