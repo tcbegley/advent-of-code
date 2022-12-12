@@ -1,6 +1,6 @@
 import sys
-from string import ascii_lowercase
 from collections import deque
+from string import ascii_lowercase
 
 HEIGHT_MAP = {
     "S": 1,
@@ -33,9 +33,9 @@ def get_neighbours(loc, grid):
             yield new_loc
 
 
-def bfs(grid, start, end):
-    queue = deque([(0, start)])
-    visited = {start}
+def bfs(grid, starts, end):
+    queue = deque([(0, start) for start in starts])
+    visited = set(starts)
 
     while queue:
         steps, loc = queue.popleft()
@@ -47,17 +47,16 @@ def bfs(grid, start, end):
                 visited.add(nbr)
                 queue.append((steps + 1, nbr))
 
-    # no solution found, return infinity so we can take a min in part 2
-    return float("inf")
+    raise RuntimeError("No solution found")
 
 
 def part_1(grid, start, end):
-    return bfs(grid, start, end)
+    return bfs(grid, [start], end)
 
 
 def part_2(grid, end):
     starts = [loc for loc, height in grid.items() if height == 1]
-    return min(bfs(grid, start, end) for start in starts)
+    return bfs(grid, starts, end)
 
 
 if __name__ == "__main__":
