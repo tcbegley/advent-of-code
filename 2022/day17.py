@@ -1,10 +1,5 @@
 import sys
-from collections import namedtuple
 from dataclasses import dataclass
-
-STEPS = 1_000_000_000_000
-
-State = namedtuple("State", ["jet_idx", "rock", "heights"])
 
 
 @dataclass(frozen=True)
@@ -36,111 +31,74 @@ def shift_rock(jet, rock, x):
     return x
 
 
-def print_chamber(chamber):
-    height = max(y for x, y in chamber)
-    print(
-        "\n".join(
-            [
-                "".join("#" if (x, y) in chamber else "." for x in range(7))
-                for y in range(height + 2, 0, -1)
-            ]
-            + ["-" * 7]
-        ),
-        end="\n" * 3,
-    )
-
-
-def part_1(jets):
-    chamber = set()
-    heights = (0,) * 7
-    jet_idx = 0
+def simulate(jets, n_rocks):
     n_jets = len(jets)
 
-    for rock_idx in range(2022):
-        rock = ROCKS[rock_idx % 5]
-        x = 2
-        y = max(heights) + 4
-
-        while True:
-            new_x = shift_rock(jets[jet_idx], rock, x)
-
-            if x != new_x and not (
-                {(new_x + dx, y + dy) for dx, dy in rock.shape} & chamber
-            ):
-                x = new_x
-
-            jet_idx = (jet_idx + 1) % n_jets
-            next_rock = {(x + dx, y + dy - 1) for dx, dy in rock.shape}
-            if y == 1 or next_rock & chamber:
-                break
-            y -= 1
-
-        rock_location = {(x + dx, y + dy) for dx, dy in rock.shape}
-        chamber.update(rock_location)
-        heights = tuple(
-            max([y for x_, y in rock_location if x_ == x] + [h])
-            for x, h in enumerate(heights)
-        )
-
-    return max(heights)
-
-
-def part_2(jets):
     chamber = set()
-    heights = (0,) * 7
+    jet_idx = rock_idx = 0
+    max_ys = (0,) * 7
     height = 0
-    jet_idx = 0
-    n_jets = len(jets)
-    rock_idx = 0
 
     seen = {}
-    change = []
+    heights = []
 
-    while rock_idx < STEPS:
+    while rock_idx < n_rocks:
         rock = ROCKS[rock_idx % 5]
         x = 2
-        y = max(heights) + 4
+        y = height + 4
 
         while True:
             new_x = shift_rock(jets[jet_idx], rock, x)
+            jet_idx = (jet_idx + 1) % n_jets
 
             if x != new_x and not (
                 {(new_x + dx, y + dy) for dx, dy in rock.shape} & chamber
             ):
                 x = new_x
 
-            jet_idx = (jet_idx + 1) % n_jets
-            next_rock = {(x + dx, y + dy - 1) for dx, dy in rock.shape}
-            if y == 1 or next_rock & chamber:
+            if (
+                y == 1
+                or {(x + dx, y + dy - 1) for dx, dy in rock.shape} & chamber
+            ):
                 break
+
             y -= 1
 
         rock_location = {(x + dx, y + dy) for dx, dy in rock.shape}
         chamber.update(rock_location)
-        heights = tuple(
-            max([y for x_, y in rock_location if x_ == x] + [h])
-            for x, h in enumerate(heights)
+        max_ys = tuple(
+            max([y for x, y in rock_location if x == i] + [max_y])
+            for i, max_y in enumerate(max_ys)
         )
-        change.append(max(heights) - height)
-        height = max(heights)
+        height = max(max_ys)
+        heights.append(height)
         rock_idx += 1
 
-        state = (rock_idx % 5, jet_idx, tuple(h - height for h in heights))
+        state = (rock_idx % 5, jet_idx, tuple(h - height for h in max_ys))
 
         if state in seen:
             prev_height, prev_idx = seen[state]
             cycle_length = rock_idx - prev_idx
             height_delta = height - prev_height
-            n_cycles, rem = divmod(STEPS - prev_idx, cycle_length)
+            n_cycles, rem = divmod(n_rocks - prev_idx, cycle_length)
             return (
                 prev_height
                 + height_delta * n_cycles
-                + sum(change[prev_idx : prev_idx + rem])
+                + heights[prev_idx + rem - 1]
+                - heights[prev_idx - 1]
             )
 
         seen[state] = (height, rock_idx)
 
-    return max(heights)
+    return max(max_ys)
+
+
+def part_1(jets):
+    return simulate(jets, n_rocks=2022)
+
+
+def part_2(jets):
+    return simulate(jets, n_rocks=1_000_000_000_000)
 
 
 if __name__ == "__main__":
