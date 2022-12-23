@@ -1,5 +1,5 @@
 import sys
-from collections import Counter
+from copy import deepcopy
 
 
 class Cart:
@@ -22,10 +22,11 @@ class Cart:
         (0, -1): [(-1, 0), (0, -1), (1, 0)],
     }
 
-    def __init__(self, d, l):
-        self.dir = d
-        self.loc = l
+    def __init__(self, location, direction):
+        self.loc = location
+        self.dir = direction
         self._dir_changes = 0
+        self._alive = True
 
     def move(self, track):
         self.loc = self.add(self.loc, self.dir)
@@ -51,68 +52,62 @@ class Cart:
         return (a[0] + b[0], a[1] + b[1])
 
 
-def print_track(track, carts=None):
-    dir_map = {(1, 0): ">", (0, -1): "^", (0, 1): "v", (-1, 0): "<"}
-
-    maxi = max(track.keys(), key=lambda x: x[0])[0]
-    maxj = max(track.keys(), key=lambda x: x[1])[1]
-
-    if carts is not None:
-        cart_locs = {c.loc: dir_map[c.dir] for c in carts}
-    else:
-        cart_locs = {}
-
-    for j in range(maxj + 1):
-        row = ""
-        for i in range(maxi + 1):
-            if (i, j) in cart_locs:
-                row += cart_locs[(i, j)]
-            elif (i, j) in track:
-                row += track[(i, j)]
-            else:
-                row += "."
-        print(row)
-
-
-def check_for_crash(carts):
-    most_common = Counter([c.loc for c in carts]).most_common(1)[0]
-    if most_common[1] > 1:
-        return most_common[0]
-    return False
-
-
-def answer(path):
+def load_data(path):
     with open(path) as f:
-        lines = f.read().split("\n")
+        rows = f.read().split("\n")
 
     track = {}
     carts = []
 
-    for j, line in enumerate(lines):
-        for i, c in enumerate(line):
-            if c in "-|/\\+":
-                track[(i, j)] = c
-            elif c in "v^":
-                track[(i, j)] = "|"
-                if c == "v":
-                    carts.append(Cart((0, 1), (i, j)))
-                else:
-                    carts.append(Cart((0, -1), (i, j)))
-            elif c in "<>":
-                track[(i, j)] = "-"
-                if c == ">":
-                    carts.append(Cart((1, 0), (i, j)))
-                else:
-                    carts.append(Cart((-1, 0), (i, j)))
+    for y, row in enumerate(rows):
+        for x, char in enumerate(row):
+            if char in "-|/\\+":
+                track[(x, y)] = char
+            elif char == "v":
+                track[(x, y)] = "|"
+                carts.append(Cart((x, y), (0, 1)))
+            elif char == "^":
+                track[(x, y)] = "|"
+                carts.append(Cart((x, y), (0, -1)))
+            elif char == ">":
+                track[(x, y)] = "-"
+                carts.append(Cart((x, y), (1, 0)))
+            elif char == "<":
+                track[(x, y)] = "-"
+                carts.append(Cart((x, y), (-1, 0)))
 
+    return track, carts
+
+
+def part_1(track, carts):
     while True:
-        for c in sorted(carts, key=lambda c: (c.loc[1], c.loc[0])):
-            c.move(track)
+        for cart in sorted(carts, key=lambda c: (c.loc[1], c.loc[0])):
+            cart.move(track)
+            if any(
+                cart2.loc == cart.loc for cart2 in carts if cart is not cart2
+            ):
+                return cart.loc
 
-        crash = check_for_crash(carts)
-        if crash:
-            return crash
+
+def part_2(track, carts):
+    while len(carts) > 1:
+        for cart in sorted(carts, key=lambda c: (c.loc[1], c.loc[0])):
+            if not cart._alive:
+                continue
+            cart.move(track)
+            for cart2 in carts:
+                if cart is cart2:
+                    continue
+                elif cart2._alive and (cart.loc == cart2.loc):
+                    cart._alive = False
+                    cart2._alive = False
+
+        carts = [cart for cart in carts if cart._alive]
+
+    return carts[0].loc
 
 
 if __name__ == "__main__":
-    print(answer(sys.argv[1]))
+    track, carts = load_data(sys.argv[1])
+    print(f"Part 1: {part_1(track, deepcopy(carts))}")
+    print(f"Part 2: {part_2(track, carts)}")
