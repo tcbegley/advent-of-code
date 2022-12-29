@@ -1,7 +1,8 @@
 import re
 import sys
 
-ops = {
+NUMBER = re.compile(r"-?\d+")
+OPS = {
     "addr": lambda a, b, r: r[a] + r[b],
     "addi": lambda a, b, r: r[a] + b,
     "mulr": lambda a, b, r: r[a] * r[b],
@@ -21,42 +22,71 @@ ops = {
 }
 
 
-def parse_sample(s):
-    s = s.split("\n")
-    b = [int(i) for i in re.search(r"\[([\d, ]+)\]", s[0]).group(1).split(",")]
-    i = [int(i) for i in s[1].split(" ")]
-    a = [int(i) for i in re.search(r"\[([\d, ]+)\]", s[2]).group(1).split(",")]
-    return (b, i, a)
+def load_data(path):
+    with open(path) as f:
+        samples, tests = f.read().strip().split("\n\n\n\n")
+
+    samples = [
+        tuple(
+            list(x)
+            for x in zip(
+                *([iter([int(i) for i in NUMBER.findall(sample)])] * 4)
+            )
+        )
+        for sample in samples.split("\n\n")
+    ]
+    tests = [
+        [int(i) for i in NUMBER.findall(test)] for test in tests.split("\n")
+    ]
+    return samples, tests
 
 
-def apply(a, b, c, r, op):
+def apply_op(op, a, b, c, r):
     r[c] = op(a, b, r)
     return r
 
 
-def answer(path):
-    with open(path) as f:
-        samples, test = f.read().strip().split("\n\n\n")
+def part_1(samples):
+    return sum(
+        sum(
+            apply_op(op, *instructions[1:], before[:]) == after
+            for op in OPS.values()
+        )
+        >= 3
+        for before, instructions, after in samples
+    )
 
-    samples = samples.split("\n\n")
-    test = [
-        [int(i) for i in line.split(" ")] for line in test.strip().split("\n")
-    ]
 
-    samples = [parse_sample(s) for s in samples]
-    count = 0
+def part_2(samples, tests):
+    possible = {i: set(OPS) for i in range(16)}
+    for before, instructions, after in samples:
+        for op_name, op in OPS.items():
+            if (
+                op_name in possible[instructions[0]]
+                and apply_op(op, *instructions[1:], before[:]) != after
+            ):
+                possible[instructions[0]].remove(op_name)
 
-    for s in samples:
-        n = 0
-        b, i, a = s
-        for op in ops.values():
-            if apply(i[1], i[2], i[3], b[:], op) == a:
-                n += 1
-            if n >= 3:
-                count += 1
-                break
-    return count
+    opcodes = {}
+    while len(opcodes) < 16:
+        for i, candidates in tuple(possible.items()):
+            if len(candidates) == 1:
+                opcode = candidates.pop()
+                for j, v in possible.items():
+                    if j != i and opcode in v:
+                        v.remove(opcode)
+                opcodes[i] = opcode
+                del possible[i]
+                continue
+
+    registers = [0] * 4
+    for op, a, b, c in tests:
+        registers = apply_op(OPS[opcodes[op]], a, b, c, registers)
+
+    return registers[0]
 
 
 if __name__ == "__main__":
-    print(answer(sys.argv[1]))
+    samples, tests = load_data(sys.argv[1])
+    print(f"Part 1: {part_1(samples)}")
+    print(f"Part 2: {part_2(samples, tests)}")
