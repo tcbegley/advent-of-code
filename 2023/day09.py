@@ -1,5 +1,6 @@
 import re
 import sys
+from itertools import pairwise
 
 NUMBER = re.compile(r"-?\d+")
 
@@ -12,28 +13,15 @@ def load_data(path):
         ]
 
 
-def differences(sequence):
-    for a, b in zip(sequence[:-1], sequence[1:]):
-        yield b - a
-
-
 def extrapolate(sequence, left=False):
     idx, mul = (0, -1) if left else (-1, 1)
-    diffs = list(differences(sequence))
+    diffs = [b - a for a, b in pairwise(sequence)]
     if all(diff == 0 for diff in diffs):
         return sequence[idx]
     return sequence[idx] + mul * extrapolate(diffs, left=left)
 
 
-def part_1(data):
-    return sum(extrapolate(sequence) for sequence in data)
-
-
-def part_2(data):
-    return sum(extrapolate(sequence, left=True) for sequence in data)
-
-
 if __name__ == "__main__":
     data = load_data(sys.argv[1])
-    print(f"Part 1: {part_1(data)}")
-    print(f"Part 2: {part_2(data)}")
+    print(f"Part 1: {sum(extrapolate(seq) for seq in data)}")
+    print(f"Part 2: {sum(extrapolate(seq, left=True) for seq in data)}")
