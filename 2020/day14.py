@@ -9,8 +9,7 @@ class Computer:
     def decode1(self, instructions):
         def decoder(addr, val, mem):
             masked_val = "".join(
-                m if m != "X" else v
-                for m, v in zip(self.mask, self.to_bin(val))
+                m if m != "X" else v for m, v in zip(self.mask, self.to_bin(val))
             )
             mem[addr] = int(masked_val, 2)
 
@@ -19,8 +18,7 @@ class Computer:
     def decode2(self, instructions):
         def decoder(addr, val, mem):
             masked_addr = "".join(
-                m if m != "0" else v
-                for m, v in zip(self.mask, self.to_bin(addr))
+                m if m != "0" else v for m, v in zip(self.mask, self.to_bin(addr))
             )
             for a in self.generate_addresses(masked_addr):
                 mem[int(a, 2)] = val

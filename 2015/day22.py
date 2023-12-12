@@ -30,9 +30,7 @@ def magic_missile(game):
 
 
 def drain(game):
-    wizard = Wizard(
-        game.wizard.hp + 2, game.wizard.armour, game.wizard.mana - 73
-    )
+    wizard = Wizard(game.wizard.hp + 2, game.wizard.armour, game.wizard.mana - 73)
     boss = Boss(game.boss.hp - 2, game.boss.damage)
     return Game(wizard, boss, game.effects, game.mana_spent + 73)
 
@@ -138,9 +136,7 @@ def breadth_first_search(b, hard_mode=False):
 
 def load_data(path):
     with open(path) as f:
-        return [
-            int(line.split(": ")[1]) for line in f.read().strip().split("\n")
-        ]
+        return [int(line.split(": ")[1]) for line in f.read().strip().split("\n")]
 
 
 def part_1(b):

@@ -6,9 +6,7 @@ def load_data(path):
     with open(path) as f:
         rows = [row.split(" ") for row in f.read().strip().split("\n")]
 
-    return [
-        (spring, tuple(map(int, counts.split(",")))) for spring, counts in rows
-    ]
+    return [(spring, tuple(map(int, counts.split(",")))) for spring, counts in rows]
 
 
 @cache
@@ -26,9 +24,9 @@ def count_possibilities(springs, counts):
     if springs[0] == "?":
         # first spring is either functional, or it isn't. In former case replace with
         # functional and count again. In latter case discard
-        return count_possibilities(
-            f"#{springs[1:]}", counts
-        ) + count_possibilities(springs[1:], counts)
+        return count_possibilities(f"#{springs[1:]}", counts) + count_possibilities(
+            springs[1:], counts
+        )
 
     if springs[0] == "#":
         count, *counts = counts
@@ -51,16 +49,11 @@ def unfold(data):
 
 
 def part_1(data):
-    return sum(
-        count_possibilities(springs, counts) for springs, counts in data
-    )
+    return sum(count_possibilities(springs, counts) for springs, counts in data)
 
 
 def part_2(data):
-    return sum(
-        count_possibilities(springs, counts)
-        for springs, counts in unfold(data)
-    )
+    return sum(count_possibilities(springs, counts) for springs, counts in unfold(data))
 
 
 if __name__ == "__main__":

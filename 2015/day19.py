@@ -20,9 +20,7 @@ def step(replacements, molecule):
         while original in molecule[start:]:
             i = molecule.index(original, start)
             possible.add(
-                "".join(
-                    [molecule[:i], replacement, molecule[i + len_original :]]
-                )
+                "".join([molecule[:i], replacement, molecule[i + len_original :]])
             )
             start = i + len_original
     return possible

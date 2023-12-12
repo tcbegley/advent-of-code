@@ -19,10 +19,7 @@ RINGS = [
 def load_data(path):
     with open(path) as f:
         return Fighter(
-            *[
-                int(line.split(": ")[1])
-                for line in f.read().strip().split("\n")
-            ]
+            *[int(line.split(": ")[1]) for line in f.read().strip().split("\n")]
         )
 
 
@@ -46,13 +43,9 @@ def fight(player, boss):
 
 
 def part_1(boss):
-    items = sorted(
-        gen_items(), key=lambda items: sum(item[0] for item in items)
-    )
+    items = sorted(gen_items(), key=lambda items: sum(item[0] for item in items))
     for item_set in items:
-        player = Fighter(
-            100, sum(i[1] for i in item_set), sum(i[2] for i in item_set)
-        )
+        player = Fighter(100, sum(i[1] for i in item_set), sum(i[2] for i in item_set))
         if fight(player, boss):
             return sum(i[0] for i in item_set)
 
@@ -64,9 +57,7 @@ def part_2(boss):
         reverse=True,
     )
     for item_set in items:
-        player = Fighter(
-            100, sum(i[1] for i in item_set), sum(i[2] for i in item_set)
-        )
+        player = Fighter(100, sum(i[1] for i in item_set), sum(i[2] for i in item_set))
         if not fight(player, boss):
             return sum(i[0] for i in item_set)
 

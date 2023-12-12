@@ -11,9 +11,7 @@ def part_1(groups):
 
 
 def part_2(groups):
-    return sum(
-        len(set.intersection(*[set(a) for a in g.split("\n")])) for g in groups
-    )
+    return sum(len(set.intersection(*[set(a) for a in g.split("\n")])) for g in groups)
 
 
 if __name__ == "__main__":

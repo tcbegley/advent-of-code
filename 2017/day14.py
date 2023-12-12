@@ -80,18 +80,14 @@ def knot_hash(hash_input):
 def part_1(hash_input):
     hashes = []
     for i in range(128):
-        hashes.append(
-            sum(int(j) for j in knot_hash("{}-{}".format(hash_input, i)))
-        )
+        hashes.append(sum(int(j) for j in knot_hash("{}-{}".format(hash_input, i))))
     return sum(hashes)
 
 
 def part_2(hash_input):
     hashes = []
     for i in range(128):
-        hashes.append(
-            [int(j) for j in knot_hash("{}-{}".format(hash_input, i))]
-        )
+        hashes.append([int(j) for j in knot_hash("{}-{}".format(hash_input, i))])
 
     g = Graph()
     to_visit = set()

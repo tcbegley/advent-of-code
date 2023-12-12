@@ -1,9 +1,7 @@
 import sys
 from string import ascii_lowercase, ascii_uppercase
 
-PRIORITIES = {
-    c: i for i, c in enumerate(ascii_lowercase + ascii_uppercase, start=1)
-}
+PRIORITIES = {c: i for i, c in enumerate(ascii_lowercase + ascii_uppercase, start=1)}
 
 
 def load_data(path):

@@ -6,9 +6,7 @@ INTEGER_PATTERN = re.compile(r"\-?[0-9]+")
 
 def load_data(path):
     with open(path) as f:
-        x_min, x_max, y_min, y_max = [
-            int(i) for i in INTEGER_PATTERN.findall(f.read())
-        ]
+        x_min, x_max, y_min, y_max = [int(i) for i in INTEGER_PATTERN.findall(f.read())]
     if max(x_min, x_max) < 0:
         # wlog can assume target is in positive x direction
         return -x_max, -x_min, y_min, y_max

@@ -41,9 +41,7 @@ def part_2(rules, messages):
     rules["8"] = "42 +"
     # this is horrible, but Python doesn't have recursive regex...
     # 5 is not necessarily the right number for all inputs
-    rules["11"] = " | ".join(
-        [" ".join(["42"] * n + ["31"] * n) for n in range(1, 5)]
-    )
+    rules["11"] = " | ".join([" ".join(["42"] * n + ["31"] * n) for n in range(1, 5)])
     return count_matches(rules, messages)
 
 

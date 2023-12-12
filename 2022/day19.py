@@ -127,8 +127,7 @@ def max_geodes(bp: Blueprint, t: int = 24):
 
 def part_1(blueprints):
     return sum(
-        idx * geodes
-        for idx, geodes in enumerate(map(max_geodes, blueprints), start=1)
+        idx * geodes for idx, geodes in enumerate(map(max_geodes, blueprints), start=1)
     )
 
 

@@ -14,10 +14,7 @@ class Knot:
         self.head = (0, 0)
 
     def move(self, new_head):
-        if (
-            self.l1(new_head, self.loc) > 2
-            or self.linf(new_head, self.loc) > 1
-        ):
+        if self.l1(new_head, self.loc) > 2 or self.linf(new_head, self.loc) > 1:
             self.loc = (
                 self.step_towards(self.loc[0], new_head[0]),
                 self.step_towards(self.loc[1], new_head[1]),

@@ -14,11 +14,7 @@ def spin(s, x):
 def exchange(s, ab):
     pos = sorted(list(map(int, ab.split("/"))))
     return (
-        s[: pos[0]]
-        + s[pos[1]]
-        + s[pos[0] + 1 : pos[1]]
-        + s[pos[0]]
-        + s[pos[1] + 1 :]
+        s[: pos[0]] + s[pos[1]] + s[pos[0] + 1 : pos[1]] + s[pos[0]] + s[pos[1] + 1 :]
     )
 
 

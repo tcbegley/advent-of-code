@@ -33,8 +33,7 @@ def normalise_floors(floors):
         )
     }
     return tuple(
-        tuple(mapping[x] if x > 0 else -mapping[-x] for x in floor)
-        for floor in floors
+        tuple(mapping[x] if x > 0 else -mapping[-x] for x in floor) for floor in floors
     )
 
 
@@ -73,9 +72,7 @@ def get_lower_bound(floors, loc):
     if loc < first_non_empty:
         # if we start below the first floor with items, we don't have anything
         # to power the elevator!
-        raise ValueError(
-            "You need an item on the current floor to power the elevator"
-        )
+        raise ValueError("You need an item on the current floor to power the elevator")
     elif loc > first_non_empty:
         # we move down to the lowest non-empty floor, taking one item with us
         lower_bound += loc - first_non_empty
@@ -95,11 +92,7 @@ def items_are_valid(items):
     # items are only invalid if there is a non-matching chip and generator
     # so ok if there is only one item, if both items have same sign or if both
     # items have the same magnitude (i.e. type)
-    return (
-        len(items) == 1
-        or items[0] * items[1] > 0
-        or abs(items[0]) == abs(items[1])
-    )
+    return len(items) == 1 or items[0] * items[1] > 0 or abs(items[0]) == abs(items[1])
 
 
 def floor_is_valid(floor):

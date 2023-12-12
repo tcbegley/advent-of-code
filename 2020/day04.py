@@ -11,10 +11,7 @@ def load_data(path):
     with open(path) as f:
         passports = f.read().strip().replace("\n", " ").split("  ")
 
-    return [
-        dict([x.split(":") for x in passport.split(" ")])
-        for passport in passports
-    ]
+    return [dict([x.split(":") for x in passport.split(" ")]) for passport in passports]
 
 
 def valid_1(p):

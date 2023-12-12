@@ -5,9 +5,7 @@ from functools import lru_cache
 
 def load_data(path):
     with open(path) as f:
-        return tuple(
-            reversed(sorted(int(i) for i in f.read().strip().split("\n")))
-        )
+        return tuple(reversed(sorted(int(i) for i in f.read().strip().split("\n"))))
 
 
 @lru_cache

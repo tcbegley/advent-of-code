@@ -27,25 +27,17 @@ class Packet:
         if self.type_id == 0:
             self.value = sum(p.value for p in self.subpackets)
         elif self.type_id == 1:
-            self.value = reduce(
-                lambda x, y: x * y, (p.value for p in self.subpackets)
-            )
+            self.value = reduce(lambda x, y: x * y, (p.value for p in self.subpackets))
         elif self.type_id == 2:
             self.value = min(p.value for p in self.subpackets)
         elif self.type_id == 3:
             self.value = max(p.value for p in self.subpackets)
         elif self.type_id == 5:
-            self.value = int(
-                self.subpackets[0].value > self.subpackets[1].value
-            )
+            self.value = int(self.subpackets[0].value > self.subpackets[1].value)
         elif self.type_id == 6:
-            self.value = int(
-                self.subpackets[0].value < self.subpackets[1].value
-            )
+            self.value = int(self.subpackets[0].value < self.subpackets[1].value)
         elif self.type_id == 7:
-            self.value = int(
-                self.subpackets[0].value == self.subpackets[1].value
-            )
+            self.value = int(self.subpackets[0].value == self.subpackets[1].value)
 
 
 def parse_packets(data, limit=sys.maxsize):
@@ -56,9 +48,7 @@ def parse_packets(data, limit=sys.maxsize):
         version, type_id, data = parse_header(data)
         if type_id == 4:
             value, data = parse_literal(data)
-            packets.append(
-                Packet(version=version, type_id=type_id, value=value)
-            )
+            packets.append(Packet(version=version, type_id=type_id, value=value))
         elif data[0] == "0":
             num_bits, data = int(data[1:16], 2), data[16:]
             subpackets, data = data[:num_bits], data[num_bits:]
@@ -103,9 +93,7 @@ def parse_literal(data):
 
 
 def sum_versions(packets):
-    return sum(
-        packet.version + sum_versions(packet.subpackets) for packet in packets
-    )
+    return sum(packet.version + sum_versions(packet.subpackets) for packet in packets)
 
 
 def part_1(data):

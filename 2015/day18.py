@@ -8,11 +8,7 @@ def load_data(path):
     with open(path) as f:
         grid = f.read().strip().split("\n")
 
-    return {
-        (x, y): c == "#"
-        for y, row in enumerate(grid)
-        for x, c in enumerate(row)
-    }
+    return {(x, y): c == "#" for y, row in enumerate(grid) for x, c in enumerate(row)}
 
 
 def get_neighbours(loc, max_x, max_y):

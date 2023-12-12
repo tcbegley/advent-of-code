@@ -48,9 +48,7 @@ class Tile:
 
     def _rotate(self):
         n = len(self.body)
-        body = [
-            "".join(self.body[-(j + 1)][i] for j in range(n)) for i in range(n)
-        ]
+        body = ["".join(self.body[-(j + 1)][i] for j in range(n)) for i in range(n)]
         edges = [self.edges[i] for i in [3, 0, 1, 2]]
         return Tile(self.id_, body, edges)
 
@@ -201,9 +199,9 @@ def part_2(tiles):
     # abuse Tile class for rotation / reflection purposes
     image = Tile(
         None,
-        "\n".join(
-            "\n".join("".join(x) for x in zip(*row)) for row in image
-        ).split("\n"),
+        "\n".join("\n".join("".join(x) for x in zip(*row)) for row in image).split(
+            "\n"
+        ),
         ["a", "a", "a", "a"],
     )
 

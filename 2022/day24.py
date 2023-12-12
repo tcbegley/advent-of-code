@@ -84,11 +84,7 @@ def part_1(blizzards, start, end, n_rows, n_cols):
 def part_2(blizzards, start, end, n_rows, n_cols):
     t1 = bfs(blizzards, start, end, n_rows, n_cols)
     t2 = bfs(blizzards, end, start, n_rows, n_cols, time_offset=t1)
-    return (
-        t1
-        + t2
-        + bfs(blizzards, start, end, n_rows, n_cols, time_offset=t1 + t2)
-    )
+    return t1 + t2 + bfs(blizzards, start, end, n_rows, n_cols, time_offset=t1 + t2)
 
 
 if __name__ == "__main__":

@@ -29,9 +29,7 @@ def answer(lines, diagonals=False):
             for i in get_range(start[0], end[0]):
                 covered[(i, start[1])] += 1
         elif diagonals:
-            for i, j in zip(
-                get_range(start[0], end[0]), get_range(start[1], end[1])
-            ):
+            for i, j in zip(get_range(start[0], end[0]), get_range(start[1], end[1])):
                 covered[(i, j)] += 1
 
     return sum(v >= 2 for v in covered.values())

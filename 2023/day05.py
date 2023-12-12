@@ -63,9 +63,7 @@ def pad_intervals(intervals):
     for i, interval in enumerate(sorted(intervals, key=lambda i: i.low)):
         padded_intervals.append(interval)
         if i < len(intervals) - 1:
-            padded_intervals.append(
-                Interval(interval.high, intervals[i + 1].low, 0)
-            )
+            padded_intervals.append(Interval(interval.high, intervals[i + 1].low, 0))
         else:
             padded_intervals.append(Interval(interval.high, float("inf"), 0))
 
@@ -86,9 +84,7 @@ def part_1(seeds, maps):
 def part_2(seeds, maps):
     # this is a trick to iterate over the seeds in pairs
     iterator = [iter(seeds)] * 2
-    intervals = [
-        Interval(start, start + length, 0) for start, length in zip(*iterator)
-    ]
+    intervals = [Interval(start, start + length, 0) for start, length in zip(*iterator)]
     return solve(intervals, maps)
 
 

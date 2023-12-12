@@ -72,9 +72,7 @@ def part_1(numbers):
 
 
 def part_2(numbers):
-    numbers = play_game(
-        numbers + tuple(range(10, 1_000_001)), moves=10_000_000
-    )
+    numbers = play_game(numbers + tuple(range(10, 1_000_001)), moves=10_000_000)
     return (x := numbers[1]["r"]) * numbers[x]["r"]
 
 

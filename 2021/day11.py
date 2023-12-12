@@ -72,9 +72,7 @@ def part_2(octopuses):
     n_rows, n_cols = len(octopuses), len(octopuses[0])
     # octopuses has been evolved 100 times in first step
     i = 100
-    while (
-        sum(o.energy_level == 0 for o in chain(*octopuses)) < n_rows * n_cols
-    ):
+    while sum(o.energy_level == 0 for o in chain(*octopuses)) < n_rows * n_cols:
         evolve_single_step(octopuses, i)
         i += 1
 

@@ -38,9 +38,7 @@ def load_data(path):
 
 def part_1(packets):
     return sum(
-        i
-        for i, (left, right) in enumerate(packets, start=1)
-        if compare(left, right)
+        i for i, (left, right) in enumerate(packets, start=1) if compare(left, right)
     )
 
 

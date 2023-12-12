@@ -65,9 +65,7 @@ def simulate_round(monkeys, item_hook):
 def simulate(monkeys, n_rounds, item_hook):
     for _ in range(n_rounds):
         monkeys = simulate_round(monkeys, item_hook)
-    activity = sorted(
-        [monkey.num_inspections for monkey in monkeys], reverse=True
-    )
+    activity = sorted([monkey.num_inspections for monkey in monkeys], reverse=True)
     return activity[0] * activity[1]
 
 

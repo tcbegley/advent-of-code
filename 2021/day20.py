@@ -27,13 +27,9 @@ def patch_to_index(lit, unlit, x, y, default=False):
 
     if default:
         return sum(
-            1 << i
-            for i, (dx, dy) in enumerate(locs)
-            if (x + dx, y + dy) not in unlit
+            1 << i for i, (dx, dy) in enumerate(locs) if (x + dx, y + dy) not in unlit
         )
-    return sum(
-        1 << i for i, (dx, dy) in enumerate(locs) if (x + dx, y + dy) in lit
-    )
+    return sum(1 << i for i, (dx, dy) in enumerate(locs) if (x + dx, y + dy) in lit)
 
 
 def get_all_neighbours(lit, unlit):

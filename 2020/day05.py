@@ -4,10 +4,7 @@ import sys
 def load_data(path):
     trans_table = str.maketrans({"R": "1", "B": "1", "F": "0", "L": "0"})
     with open(path) as f:
-        return [
-            int(p, 2)
-            for p in f.read().strip().translate(trans_table).split("\n")
-        ]
+        return [int(p, 2) for p in f.read().strip().translate(trans_table).split("\n")]
 
 
 def part_1(passes):

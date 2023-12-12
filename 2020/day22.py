@@ -4,9 +4,7 @@ from collections import deque
 
 def load_data(path):
     with open(path) as f:
-        player1, player2 = [
-            c.split("\n")[1:] for c in f.read().strip().split("\n\n")
-        ]
+        player1, player2 = [c.split("\n")[1:] for c in f.read().strip().split("\n\n")]
 
     player1 = [int(i) for i in player1]
     player2 = [int(i) for i in player2]
@@ -15,9 +13,7 @@ def load_data(path):
 
 
 def calculate_score(winner):
-    return sum(
-        map(lambda ab: ab[0] * ab[1], enumerate(reversed(winner), start=1))
-    )
+    return sum(map(lambda ab: ab[0] * ab[1], enumerate(reversed(winner), start=1)))
 
 
 def play_game(player1, player2):

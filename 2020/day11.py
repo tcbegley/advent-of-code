@@ -24,10 +24,7 @@ def get_neighbours_2(seats, i, j):
 
     for x, y in dirs:
         alpha = 1
-        while (
-            0 <= (r := i + alpha * x) < rows
-            and 0 <= (c := j + alpha * y) < cols
-        ):
+        while 0 <= (r := i + alpha * x) < rows and 0 <= (c := j + alpha * y) < cols:
             if seats[r][c] != ".":
                 yield seats[r][c]
                 break
@@ -47,9 +44,7 @@ def simulate_step(seats, tol, get_neighbours):
 
             if seats[i][j] == "L" and sum(seat == "#" for seat in nbrs) == 0:
                 new_seats[i][j] = "#"
-            elif (
-                seats[i][j] == "#" and sum(seat == "#" for seat in nbrs) >= tol
-            ):
+            elif seats[i][j] == "#" and sum(seat == "#" for seat in nbrs) >= tol:
                 new_seats[i][j] = "L"
 
     return new_seats

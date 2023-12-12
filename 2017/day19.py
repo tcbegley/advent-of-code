@@ -46,8 +46,7 @@ class Explorer:
             if cur_loc in auc:
                 self.seen.append(cur_loc)
             self.x, self.y = [
-                x + y
-                for x, y in zip((self.x, self.y), Explorer.dirs[self.cur_dir])
+                x + y for x, y in zip((self.x, self.y), Explorer.dirs[self.cur_dir])
             ]
 
 

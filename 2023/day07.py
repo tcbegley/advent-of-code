@@ -1,7 +1,6 @@
 import sys
 from collections import Counter
 
-
 VALUE_MAP = {v: i for i, v in enumerate("23456789TJQKA")}
 
 

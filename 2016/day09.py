@@ -41,8 +41,7 @@ def decompressed_length(characters):
         n_chars, repeat = map(int, characters[left + 1 : right].split("x"))
 
         total += (
-            decompressed_length(characters[right + 1 : right + n_chars + 1])
-            * repeat
+            decompressed_length(characters[right + 1 : right + n_chars + 1]) * repeat
         )
 
         left, right = right + n_chars + 1, right + n_chars + 1

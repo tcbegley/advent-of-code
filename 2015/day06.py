@@ -16,9 +16,7 @@ def load_data(path):
 
 
 def setup_lights(instructions, toggle, turn_on, turn_off, lights):
-    for action, x_start, y_start, x_end, y_end in tqdm(
-        instructions, leave=False
-    ):
+    for action, x_start, y_start, x_end, y_end in tqdm(instructions, leave=False):
         for x in range(x_start, x_end + 1):
             for y in range(y_start, y_end + 1):
                 if action == "toggle":

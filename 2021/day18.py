@@ -162,9 +162,7 @@ def part_1(data):
 
 
 def part_2(data):
-    return max(
-        reduce_number(x + y).magnitude() for x, y in permutations(data, 2)
-    )
+    return max(reduce_number(x + y).magnitude() for x, y in permutations(data, 2))
 
 
 if __name__ == "__main__":

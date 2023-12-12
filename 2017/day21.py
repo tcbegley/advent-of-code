@@ -4,9 +4,7 @@ from itertools import chain
 
 def load_data(path):
     with open(path) as f:
-        return dict(
-            line.split(" => ") for line in f.read().strip().split("\n")
-        )
+        return dict(line.split(" => ") for line in f.read().strip().split("\n"))
 
 
 def to_array(string):
@@ -19,9 +17,7 @@ def to_string(arr):
 
 def concatenate_blocks(blocks):
     return list(
-        chain(
-            *[[list(chain(*rows)) for rows in zip(*block)] for block in blocks]
-        )
+        chain(*[[list(chain(*rows)) for rows in zip(*block)] for block in blocks])
     )
 
 
@@ -36,13 +32,9 @@ def gen_flips(k):
 def gen_rots(k):
     perms = []
     k = [[c for c in r] for r in k.split("/")]
-    perms.append(
-        [[k[len(k) - j - 1][i] for j in range(len(k))] for i in range(len(k))]
-    )
+    perms.append([[k[len(k) - j - 1][i] for j in range(len(k))] for i in range(len(k))])
     perms.append(list(reversed([list(reversed(r)) for r in k])))
-    perms.append(
-        [[k[j][len(k) - i - 1] for j in range(len(k))] for i in range(len(k))]
-    )
+    perms.append([[k[j][len(k) - i - 1] for j in range(len(k))] for i in range(len(k))])
     return ["/".join(["".join(r) for r in perm]) for perm in perms]
 
 

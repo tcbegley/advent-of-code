@@ -16,15 +16,11 @@ def search1(chain, unused):
             elif comp[1] == 0:
                 ms = max(
                     ms,
-                    search1(
-                        [[comp[1], comp[0]]], unused[:i] + unused[i + 1 :]
-                    ),
+                    search1([[comp[1], comp[0]]], unused[:i] + unused[i + 1 :]),
                 )
         else:
             if comp[0] == chain[-1][1]:
-                ms = max(
-                    ms, search1(chain + [comp], unused[:i] + unused[i + 1 :])
-                )
+                ms = max(ms, search1(chain + [comp], unused[:i] + unused[i + 1 :]))
             if comp[1] == chain[-1][1]:
                 ms = max(
                     ms,
@@ -52,9 +48,7 @@ def search2(chain, unused, ml, ms):
                 )
         else:
             if comp[0] == chain[-1][1]:
-                ml, ms = search2(
-                    chain + [comp], unused[:i] + unused[i + 1 :], ml, ms
-                )
+                ml, ms = search2(chain + [comp], unused[:i] + unused[i + 1 :], ml, ms)
             if comp[1] == chain[-1][1]:
                 ml, ms = search2(
                     chain + [[comp[1], comp[0]]],

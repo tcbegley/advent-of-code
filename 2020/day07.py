@@ -51,9 +51,7 @@ def extract_colors(s):
 
 def load_data(path):
     with open(path) as f:
-        rules = [
-            r.split(" bags contain ") for r in f.read().strip().split("\n")
-        ]
+        rules = [r.split(" bags contain ") for r in f.read().strip().split("\n")]
 
     return [(r, extract_colors(s)) for r, s in rules]
 

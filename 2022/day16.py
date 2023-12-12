@@ -19,20 +19,14 @@ class Graph:
 
 
 PATTERN = re.compile(
-    r"Valve ([A-Z]{2}) has flow rate=(\d+); "
-    "tunnels? leads? to valves? ([A-Z ,]+)"
+    r"Valve ([A-Z]{2}) has flow rate=(\d+); " "tunnels? leads? to valves? ([A-Z ,]+)"
 )
 
 
 def load_data(path):
     with open(path) as f:
-        rows = [
-            PATTERN.fullmatch(row).groups()
-            for row in f.read().strip().split("\n")
-        ]
-    valves = {
-        valve: (int(rate), dest.split(", ")) for valve, rate, dest in rows
-    }
+        rows = [PATTERN.fullmatch(row).groups() for row in f.read().strip().split("\n")]
+    valves = {valve: (int(rate), dest.split(", ")) for valve, rate, dest in rows}
     return reduce_graph(valves)
 
 
@@ -92,9 +86,7 @@ def part_2(graph):
 
     for open1 in range(all_open):
         open2 = all_open - open1
-        max_value = max(
-            max_value, value("AA", 25, open1) + value("AA", 25, open2)
-        )
+        max_value = max(max_value, value("AA", 25, open1) + value("AA", 25, open2))
 
     return max_value
 

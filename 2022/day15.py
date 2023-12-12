@@ -50,16 +50,14 @@ def is_in(val, intervals):
 
 
 def part_1(data, y=2_000_000):
-    intervals = [
-        blocked_positions(sensor, beacon, y) for sensor, beacon in data
-    ]
+    intervals = [blocked_positions(sensor, beacon, y) for sensor, beacon in data]
     beacons = {(bx, by) for _, (bx, by) in data}
     sensors = {(sx, sy) for (sx, sy), _ in data}
 
     intervals, _ = merge_intervals(intervals)
-    offset = sum(
-        is_in(sx, intervals) for (sx, sy) in sensors if sy == y
-    ) + sum(is_in(bx, intervals) for (bx, by) in beacons if by == y)
+    offset = sum(is_in(sx, intervals) for (sx, sy) in sensors if sy == y) + sum(
+        is_in(bx, intervals) for (bx, by) in beacons if by == y
+    )
     return sum(i[1] - i[0] + 1 for i in intervals) - offset
 
 

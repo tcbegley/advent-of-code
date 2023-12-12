@@ -22,16 +22,12 @@ def load_data(path):
 def iterate(east, south, max_x, max_y):
     occupied = east | south
     new_east = {
-        ((x + 1) % max_x, y)
-        if ((x + 1) % max_x, y) not in occupied
-        else (x, y)
+        ((x + 1) % max_x, y) if ((x + 1) % max_x, y) not in occupied else (x, y)
         for x, y in east
     }
     occupied = new_east | south
     new_south = {
-        (x, (y + 1) % max_y)
-        if (x, (y + 1) % max_y) not in occupied
-        else (x, y)
+        (x, (y + 1) % max_y) if (x, (y + 1) % max_y) not in occupied else (x, y)
         for (x, y) in south
     }
     return new_east, new_south

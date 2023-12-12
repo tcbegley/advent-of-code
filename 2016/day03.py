@@ -6,9 +6,7 @@ NUMBERS = re.compile(r"\d+")
 
 def load_data(path):
     with open(path) as f:
-        return [
-            [int(i) for i in NUMBERS.findall(line)] for line in f.readlines()
-        ]
+        return [[int(i) for i in NUMBERS.findall(line)] for line in f.readlines()]
 
 
 def part_1(triangles):
@@ -23,8 +21,7 @@ def part_2(triangles):
         + [t[2] for t in triangles]
     )
     triangles = [
-        sorted(triangles[3 * i : 3 * (i + 1)])
-        for i in range(len(triangles) // 3)
+        sorted(triangles[3 * i : 3 * (i + 1)]) for i in range(len(triangles) // 3)
     ]
     return sum(x + y > z for x, y, z in triangles)
 

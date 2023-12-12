@@ -15,9 +15,7 @@ def part_1(positions):
 
 def part_2(positions):
     def cost(position):
-        return sum(
-            ((p - position) ** 2 + abs(p - position)) // 2 for p in positions
-        )
+        return sum(((p - position) ** 2 + abs(p - position)) // 2 for p in positions)
 
     # can prove that best position is always within distance 1 of the mean
     # hence take integer part of mean and add 1 to check integers either side

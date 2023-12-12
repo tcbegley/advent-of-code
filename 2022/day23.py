@@ -46,10 +46,7 @@ def evolve(elves, i):
             next_elves[elf] = elf
 
     counts = Counter(next_elves.values())
-    return {
-        next_elves[elf] if counts[next_elves[elf]] == 1 else elf
-        for elf in elves
-    }
+    return {next_elves[elf] if counts[next_elves[elf]] == 1 else elf for elf in elves}
 
 
 def empty_space(elves):

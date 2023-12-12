@@ -59,11 +59,7 @@ def part_1(simulator):
 
 
 def part_2(simulator):
-    return (
-        simulator.outputs[0][0]
-        * simulator.outputs[1][0]
-        * simulator.outputs[2][0]
-    )
+    return simulator.outputs[0][0] * simulator.outputs[1][0] * simulator.outputs[2][0]
 
 
 if __name__ == "__main__":

@@ -46,9 +46,7 @@ def count(time, distance):
 
 
 def part_1(time, distance):
-    return reduce(
-        lambda a, b: a * b, (count(t, d) for t, d in zip(time, distance)), 1
-    )
+    return reduce(lambda a, b: a * b, (count(t, d) for t, d in zip(time, distance)), 1)
 
 
 def part_2(time, distance):
