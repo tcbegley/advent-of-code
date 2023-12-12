@@ -11,9 +11,7 @@ def load_data(path):
 
 
 def part_1(strings):
-    return sum(
-        2 + len(ESCAPED.findall(s)) + 3 * len(HEX.findall(s)) for s in strings
-    )
+    return sum(2 + len(ESCAPED.findall(s)) + 3 * len(HEX.findall(s)) for s in strings)
 
 
 def part_2(strings):

@@ -9,9 +9,7 @@ ROOM = re.compile(r"([a-z-]+)-(\d+)\[([a-z]+)\]")
 def load_data(path):
     with open(path) as f:
         rooms = [ROOM.fullmatch(line) for line in f.read().strip().split("\n")]
-    return [
-        (room.group(1), int(room.group(2)), room.group(3)) for room in rooms
-    ]
+    return [(room.group(1), int(room.group(2)), room.group(3)) for room in rooms]
 
 
 def valid_room(room):

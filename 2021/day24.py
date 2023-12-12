@@ -28,9 +28,7 @@ def check_assumptions(args):
     assert all(a == 1 or a == 26 for a, *_ in args)
 
     # a == 1 occurs as often as a == 26
-    assert len([a for a, *_ in args if a == 1]) == len(
-        [a for a, *_ in args if a == 26]
-    )
+    assert len([a for a, *_ in args if a == 1]) == len([a for a, *_ in args if a == 26])
 
     # when a == 1, b >= 10
     # when a == 26, b < 0

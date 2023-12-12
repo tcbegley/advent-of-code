@@ -56,10 +56,7 @@ def simulate(jets, n_rocks):
             ):
                 x = new_x
 
-            if (
-                y == 1
-                or {(x + dx, y + dy - 1) for dx, dy in rock.shape} & chamber
-            ):
+            if y == 1 or {(x + dx, y + dy - 1) for dx, dy in rock.shape} & chamber:
                 break
 
             y -= 1

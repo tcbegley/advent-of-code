@@ -53,9 +53,7 @@ def load_data(path):
             for row in card.split("\n")
         ]
 
-    return [int(n) for n in numbers.split(",")], [
-        parse_card(card) for card in cards
-    ]
+    return [int(n) for n in numbers.split(",")], [parse_card(card) for card in cards]
 
 
 def part_1(numbers, cards):

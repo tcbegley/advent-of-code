@@ -31,18 +31,13 @@ def make_tree(node, val_lookup, child_lookup):
     return Node(
         node,
         val_lookup[node],
-        [
-            make_tree(child, val_lookup, child_lookup)
-            for child in child_lookup[node]
-        ],
+        [make_tree(child, val_lookup, child_lookup) for child in child_lookup[node]],
     )
 
 
 def get_root(nodes):
     parents = set(node[0] for node in nodes)
-    children = set(
-        list(reduce(lambda x, y: x + y, [node[2] for node in nodes]))
-    )
+    children = set(list(reduce(lambda x, y: x + y, [node[2] for node in nodes])))
     return next(iter(parents - children))
 
 

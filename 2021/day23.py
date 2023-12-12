@@ -40,11 +40,7 @@ def scan_corridor(x_range, amphipod, amphipods, neighbours, room_size):
             # can't stop in front of room, but can maybe go inside
             if amphipod_type == ROOM_XS[i]:
                 first_occupied = min(
-                    (
-                        j
-                        for j in range(1, room_size + 1)
-                        if (i, j) in amphipods
-                    ),
+                    (j for j in range(1, room_size + 1) if (i, j) in amphipods),
                     default=None,
                 )
                 if first_occupied is None:
@@ -76,9 +72,7 @@ def get_neighbours(amphipod, amphipods, room_size):
 
     # scan corridor in both directions for possible end locations
     scan_corridor(range(x + 1, 11), amphipod, amphipods, neighbours, room_size)
-    scan_corridor(
-        range(x - 1, -1, -1), amphipod, amphipods, neighbours, room_size
-    )
+    scan_corridor(range(x - 1, -1, -1), amphipod, amphipods, neighbours, room_size)
 
     return neighbours
 
@@ -136,8 +130,7 @@ def bfs(amphipods, room_size=2):
                 new_amphipods[nbr] = amphipod_type
                 new_score = (
                     score
-                    + (loc[1] + nbr[1] + abs(loc[0] - nbr[0]))
-                    * SCORE[amphipod_type]
+                    + (loc[1] + nbr[1] + abs(loc[0] - nbr[0])) * SCORE[amphipod_type]
                 )
                 normalised_amphipods = normalise(new_amphipods)
                 if (

@@ -26,9 +26,7 @@ def parse_directions(directions):
         filter(
             lambda x: x is not None,
             chain.from_iterable(
-                zip_longest(
-                    map(int, pat.split(directions)), pat.findall(directions)
-                )
+                zip_longest(map(int, pat.split(directions)), pat.findall(directions))
             ),
         )
     )

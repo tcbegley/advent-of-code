@@ -13,9 +13,7 @@ def load_data(path):
 
 
 def part_1(ts, buses):
-    min_b, min_ts = min(
-        [(b, (ts // b + 1) * b) for _, b in buses], key=lambda x: x[1]
-    )
+    min_b, min_ts = min([(b, (ts // b + 1) * b) for _, b in buses], key=lambda x: x[1])
     return min_b * (min_ts - ts)
 
 

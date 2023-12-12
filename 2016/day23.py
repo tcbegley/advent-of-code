@@ -52,8 +52,7 @@ def optimise(instructions):
         block = instructions[loc : loc + 6]
 
         if (
-            [cmd for cmd, _ in block]
-            == ["cpy", "inc", "dec", "jnz", "dec", "jnz"]
+            [cmd for cmd, _ in block] == ["cpy", "inc", "dec", "jnz", "dec", "jnz"]
             and block[3][1][1] == -2
             and block[5][1][1] == -5
         ):
@@ -91,9 +90,7 @@ def process_instructions(registers, instructions):
             target_loc = loc + registers[args[0]]
 
             if 0 <= target_loc < len(instructions):
-                instructions[target_loc][0] = TOGGLE_MAP[
-                    instructions[target_loc][0]
-                ]
+                instructions[target_loc][0] = TOGGLE_MAP[instructions[target_loc][0]]
                 instructions = optimise(instructions)
         elif cmd == "mul":
             registers[args[2]] += registers[args[0]] * registers[args[1]]

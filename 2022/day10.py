@@ -35,9 +35,7 @@ def part_2(data):
         else:
             pixels.append(".")
 
-    return "\n" + "\n".join(
-        "".join(pixels[i : i + 40]) for i in range(0, 240, 40)
-    )
+    return "\n" + "\n".join("".join(pixels[i : i + 40]) for i in range(0, 240, 40))
 
 
 if __name__ == "__main__":

@@ -5,8 +5,7 @@ from itertools import combinations
 def load_data(path):
     with open(path) as f:
         return [
-            [int(i) for i in line.split("x")]
-            for line in f.read().strip().split("\n")
+            [int(i) for i in line.split("x")] for line in f.read().strip().split("\n")
         ]
 
 

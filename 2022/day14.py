@@ -3,9 +3,7 @@ import sys
 
 def load_data(path):
     def process_line(line):
-        return [
-            tuple(map(int, coord.split(","))) for coord in line.split(" -> ")
-        ]
+        return [tuple(map(int, coord.split(","))) for coord in line.split(" -> ")]
 
     with open(path) as f:
         lines = f.read().strip().split("\n")

@@ -8,9 +8,7 @@ def load_data(path):
 
 def part_1(numbers):
     return sum(
-        numbers[i - 1]
-        for i in range(len(numbers))
-        if numbers[i] == numbers[i - 1]
+        numbers[i - 1] for i in range(len(numbers)) if numbers[i] == numbers[i - 1]
     )
 
 

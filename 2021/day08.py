@@ -77,10 +77,7 @@ def part_2(data):
 
         output = 0
         for o in outputs:
-            output = (
-                output * 10
-                + DIGIT_LOOKUP["".join(sorted(mapping[d] for d in o))]
-            )
+            output = output * 10 + DIGIT_LOOKUP["".join(sorted(mapping[d] for d in o))]
         total += output
 
     return total

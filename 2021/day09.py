@@ -54,8 +54,7 @@ def get_neighbours(row, col, caves):
 
 def is_low_point(row, col, caves):
     return all(
-        caves[row][col] < caves[r][c]
-        for r, c in get_neighbours(row, col, caves)
+        caves[row][col] < caves[r][c] for r, c in get_neighbours(row, col, caves)
     )
 
 
@@ -81,10 +80,7 @@ def part_2(caves):
                     union_find.unify((row, col), nbr)
 
     sizes = sorted(
-        (
-            union_find.component_size(loc)
-            for loc in set(union_find.id.values())
-        ),
+        (union_find.component_size(loc) for loc in set(union_find.id.values())),
         reverse=True,
     )
     return sizes[0] * sizes[1] * sizes[2]

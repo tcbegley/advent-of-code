@@ -22,9 +22,7 @@ def isolate_allergens(foods):
     for ingredients, contains in foods:
         for allergen in contains:
             if allergen in allergens:
-                allergens[allergen] = allergens[allergen].intersection(
-                    set(ingredients)
-                )
+                allergens[allergen] = allergens[allergen].intersection(set(ingredients))
             else:
                 allergens[allergen] = set(ingredients)
 
@@ -34,9 +32,9 @@ def isolate_allergens(foods):
 def part_1(foods):
     allergens = isolate_allergens(foods)
 
-    allergen_free = set(
-        i for ingredients, _ in foods for i in ingredients
-    ) - set.union(*allergens.values())
+    allergen_free = set(i for ingredients, _ in foods for i in ingredients) - set.union(
+        *allergens.values()
+    )
 
     count = 0
     for ingredient in allergen_free:
@@ -47,10 +45,7 @@ def part_1(foods):
 
 def part_2(foods):
     allergens = [
-        v
-        for k, v in sorted(
-            isolate_allergens(foods).items(), key=lambda kv: kv[0]
-        )
+        v for k, v in sorted(isolate_allergens(foods).items(), key=lambda kv: kv[0])
     ]
 
     while any(len(a) > 1 for a in allergens):

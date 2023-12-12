@@ -33,8 +33,7 @@ def get_transform(pair1, pair2):
     diffs2 = tuple(a - b for a, b in zip(pair1[1], pair2[1]))
 
     permutation = {
-        i: [abs(x) for x in diffs2].index(abs(value))
-        for i, value in enumerate(diffs1)
+        i: [abs(x) for x in diffs2].index(abs(value)) for i, value in enumerate(diffs1)
     }
     reflect = [diffs1[i] != diffs2[permutation[i]] for i in range(3)]
     x, x_alt = pair1
@@ -67,9 +66,7 @@ def get_transformed_locations(beacons1, beacons2):
 
     # if we have found overlap then we can figure out how to transform back
     # to the base coordinates and return the transformed coordinates.
-    permutation, reflect, offset = get_transform(
-        overlapping[0], overlapping[1]
-    )
+    permutation, reflect, offset = get_transform(overlapping[0], overlapping[1])
     beacons2 = [
         tuple(
             -b[permutation[i]] + offset[i]
@@ -111,8 +108,7 @@ def part_1(unique_beacons):
 
 def part_2(scanners):
     return max(
-        l1(scanner1, scanner2)
-        for scanner1, scanner2 in combinations(scanners, 2)
+        l1(scanner1, scanner2) for scanner1, scanner2 in combinations(scanners, 2)
     )
 
 

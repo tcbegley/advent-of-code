@@ -3,9 +3,7 @@ import sys
 
 def load_data(path):
     with open(path) as f:
-        instructions = [
-            line.split(" ") for line in f.read().strip().split("\n")
-        ]
+        instructions = [line.split(" ") for line in f.read().strip().split("\n")]
 
     return [(x, int(y)) for x, y in instructions]
 

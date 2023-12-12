@@ -18,9 +18,7 @@ def load_data(path):
 
 def process_rule(rule):
     field, constraints = rule.split(": ")
-    constraints = [
-        [int(i) for i in c.split("-")] for c in constraints.split(" or ")
-    ]
+    constraints = [[int(i) for i in c.split("-")] for c in constraints.split(" or ")]
     return field, constraints
 
 
@@ -43,10 +41,7 @@ def part_2(rules, tickets, my_ticket):
         ticket
         for ticket in tickets
         if all(
-            any(
-                (c1[0] <= n <= c1[1]) or (c2[0] <= n <= c2[1])
-                for _, (c1, c2) in rules
-            )
+            any((c1[0] <= n <= c1[1]) or (c2[0] <= n <= c2[1]) for _, (c1, c2) in rules)
             for n in ticket
         )
     ]
@@ -58,8 +53,7 @@ def part_2(rules, tickets, my_ticket):
     for i, (_, (c1, c2)) in enumerate(rules):
         for j in range(n_fields):
             if not all(
-                (c1[0] <= t[j] <= c1[1]) or (c2[0] <= t[j] <= c2[1])
-                for t in tickets
+                (c1[0] <= t[j] <= c1[1]) or (c2[0] <= t[j] <= c2[1]) for t in tickets
             ):
                 possible[i].remove(j)
 

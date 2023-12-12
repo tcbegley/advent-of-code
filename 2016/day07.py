@@ -33,9 +33,7 @@ def find_aba(seq):
 
 
 def supports_ssl(ip):
-    abas = [
-        aba for supernet_seq in IP.split(ip) for aba in find_aba(supernet_seq)
-    ]
+    abas = [aba for supernet_seq in IP.split(ip) for aba in find_aba(supernet_seq)]
     abas = [aba for aba in abas if aba]
     return any(
         "{1}{0}{1}".format(*aba) in hypernet_seq

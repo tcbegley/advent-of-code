@@ -35,11 +35,7 @@ def get_neighbours(loc, ducts):
 
 def lower_bound(loc, visited, targets):
     return min(
-        (
-            l1(loc, target)
-            for target, i in targets.items()
-            if (visited >> i) & 1 == 0
-        ),
+        (l1(loc, target) for target, i in targets.items() if (visited >> i) & 1 == 0),
         default=0,
     )
 
@@ -62,17 +58,11 @@ def astar(targets, ducts, return_to_zero=False):
         for nbr in get_neighbours(loc, ducts):
             if nbr in targets:
                 new_visited = visited | (1 << targets[nbr])
-                if (
-                    return_to_zero
-                    and targets[nbr] != 0
-                    and new_visited == end_state
-                ):
+                if return_to_zero and targets[nbr] != 0 and new_visited == end_state:
                     new_visited ^= 1
             else:
                 new_visited = visited
-            if (nbr, new_visited) not in steps or steps[
-                (nbr, new_visited)
-            ] > s + 1:
+            if (nbr, new_visited) not in steps or steps[(nbr, new_visited)] > s + 1:
                 steps[(nbr, new_visited)] = s + 1
                 heappush(
                     queue,

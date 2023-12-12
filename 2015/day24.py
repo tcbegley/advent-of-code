@@ -21,9 +21,7 @@ def pack(weights, target, packed=(), max_length=float("inf"), qe=float("inf")):
             ):
                 return solution
         elif weight < target - packed_sum:
-            res = pack(
-                weights[i + 1 :], target, packed + (weight,), max_length, qe
-            )
+            res = pack(weights[i + 1 :], target, packed + (weight,), max_length, qe)
             if res is not None:
                 return res
     return None

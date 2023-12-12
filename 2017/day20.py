@@ -6,10 +6,7 @@ from collections import defaultdict
 def load_data(path):
     with open(path) as f:
         return [
-            [
-                [int(i) for i in x.split(",")]
-                for x in re.findall(r"<([^>]*)>", particle)
-            ]
+            [[int(i) for i in x.split(",")] for x in re.findall(r"<([^>]*)>", particle)]
             for particle in f.readlines()
         ]
 
@@ -33,9 +30,7 @@ class Particle:
 
 
 def part_1(particles):
-    particles = [
-        (i, Particle(*particle)) for i, particle in enumerate(particles)
-    ]
+    particles = [(i, Particle(*particle)) for i, particle in enumerate(particles)]
 
     min_l1_a = min(l1(p.a) for _, p in particles)
     nearest = [(i, p) for i, p in particles if l1(p.a) == min_l1_a]
