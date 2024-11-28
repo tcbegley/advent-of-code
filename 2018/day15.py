@@ -60,7 +60,7 @@ def bfs(start, targets, map_):
 
 def get_neighbours(loc):
     # yield neighbours in reading order
-    for (dr, dc) in ((-1, 0), (0, -1), (0, 1), (1, 0)):
+    for dr, dc in ((-1, 0), (0, -1), (0, 1), (1, 0)):
         yield (loc[0] + dr, loc[1] + dc)
 
 
@@ -126,9 +126,7 @@ def simulate(map_, end_on_elf_death=False):
                     player = next_loc
 
             if reachable_targets := set(targets) & set(get_neighbours(player)):
-                target = min(
-                    reachable_targets, key=lambda loc: (map_[loc].hp, loc)
-                )
+                target = min(reachable_targets, key=lambda loc: (map_[loc].hp, loc))
                 map_[target].hp -= map_[player].attack
                 if map_[target].hp <= 0:
                     if end_on_elf_death and isinstance(map_[target], Elf):

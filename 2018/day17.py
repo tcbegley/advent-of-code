@@ -79,9 +79,7 @@ def fill(clay, source):
                     falling.add(right)
 
     # filter out any water that isn't in the right range
-    return {p for p in flowing if p.y >= miny}, {
-        p for p in still if p.y >= miny
-    }
+    return {p for p in flowing if p.y >= miny}, {p for p in still if p.y >= miny}
 
 
 def part_1(clay):

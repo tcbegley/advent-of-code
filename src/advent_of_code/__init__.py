@@ -1,12 +1,13 @@
 import datetime
 from pathlib import Path
-from typing import Optional
+from typing import Annotated
 
 import aocd
 import typer
 
 HERE = Path(".")
-TEMPLATE = r"""import sys
+TEMPLATE = r"""
+import sys
 
 
 def load_data(path):
@@ -26,15 +27,18 @@ if __name__ == "__main__":
     data = load_data(sys.argv[1])
     print(f"Part 1: {part_1(data)}")
     print(f"Part 2: {part_2(data)}")
-"""
+""".lstrip()
 
 app = typer.Typer()
 
 
 @app.command()
 def lets_go(
-    year: Optional[int] = typer.Argument(None),
-    day: Optional[int] = typer.Argument(None),
+    year: Annotated[int | None, typer.Argument(help="Event year")] = None,
+    day: Annotated[int | None, typer.Argument(help="Problem day")] = None,
+    outdir: Annotated[
+        Path, typer.Option(help="Location to create files", resolve_path=True)
+    ] = HERE,
 ):
     if year is None or day is None:
         today = datetime.date.today()
@@ -42,8 +46,7 @@ def lets_go(
         day = day or today.day
 
     typer.echo(f"Creating template for {year} day {day}")
-
-    source_dir = HERE / str(year)
+    source_dir = outdir / str(year)
     data_dir = source_dir / "data"
 
     data_dir.mkdir(exist_ok=True, parents=True)
@@ -66,3 +69,7 @@ def lets_go(
             typer.style("File exists: ", fg=typer.colors.RED, bold=True)
             + f"file data/{data_file.name} already exists, not overwriting..."
         )
+
+
+if __name__ == "__main__":
+    app()

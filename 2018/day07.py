@@ -10,8 +10,7 @@ TIMES = {letter: i + 60 for i, letter in enumerate(ascii_uppercase, start=1)}
 def load_data(path):
     with open(path) as f:
         orderings = [
-            DATA_PATTERN.match(row).groups()
-            for row in f.read().strip().split("\n")
+            DATA_PATTERN.match(row).groups() for row in f.read().strip().split("\n")
         ]
 
     dependencies = {}
@@ -37,9 +36,7 @@ def solve(dependencies):
                     v.remove(task)
         while available > 0:
             # all tasks that could be started
-            tasks = [
-                task for task, deps in dependencies.items() if len(deps) == 0
-            ]
+            tasks = [task for task, deps in dependencies.items() if len(deps) == 0]
             if tasks:
                 # start with first alphabetically
                 task = min(tasks)

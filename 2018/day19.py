@@ -36,9 +36,7 @@ OPS = {
 
 def load_data(path):
     with open(path) as f:
-        instructions = [
-            row.split(" ", 1) for row in f.read().strip().split("\n")
-        ]
+        instructions = [row.split(" ", 1) for row in f.read().strip().split("\n")]
 
     instructions = [
         (cmd, tuple(map(int, args.split(" ")))) for cmd, args in instructions

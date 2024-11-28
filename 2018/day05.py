@@ -29,9 +29,7 @@ def part_1(polymer):
 
 
 def part_2(polymer):
-    return min(
-        react(polymer, skip) for skip in zip(ascii_uppercase, ascii_lowercase)
-    )
+    return min(react(polymer, skip) for skip in zip(ascii_uppercase, ascii_lowercase))
 
 
 if __name__ == "__main__":

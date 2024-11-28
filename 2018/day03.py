@@ -16,7 +16,7 @@ def load_data(path):
 def get_counts(claims):
     counts = Counter()
 
-    for (_, x0, y0, x_len, y_len) in claims:
+    for _, x0, y0, x_len, y_len in claims:
         for x in range(x0, x0 + x_len):
             for y in range(y0, y0 + y_len):
                 counts[(x, y)] += 1
@@ -32,7 +32,7 @@ def part_1(claims):
 def part_2(claims):
     counts = get_counts(claims)
 
-    for (id_, x0, y0, x_len, y_len) in claims:
+    for id_, x0, y0, x_len, y_len in claims:
         if all(
             counts[(x, y)] == 1
             for x in range(x0, x0 + x_len)

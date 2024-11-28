@@ -4,10 +4,7 @@ from collections import Counter
 
 def load_data(path):
     with open(path) as f:
-        return [
-            tuple(map(int, row.split(",")))
-            for row in f.read().strip().split("\n")
-        ]
+        return [tuple(map(int, row.split(","))) for row in f.read().strip().split("\n")]
 
 
 def compute_grid(coords):

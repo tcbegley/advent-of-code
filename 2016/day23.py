@@ -63,9 +63,7 @@ def optimise(instructions):
                 ],
                 ["cpy", [0, block[2][1][0]]],
                 ["cpy", [0, block[4][1][0]]],
-            ] + [
-                ["jnz", [0, 0]] for _ in range(3)
-            ]  # keep block size the same
+            ] + [["jnz", [0, 0]] for _ in range(3)]  # keep block size the same
             instructions[loc : loc + 6] = new_block
     return instructions
 

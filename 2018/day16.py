@@ -29,15 +29,11 @@ def load_data(path):
     samples = [
         tuple(
             list(x)
-            for x in zip(
-                *([iter([int(i) for i in NUMBER.findall(sample)])] * 4)
-            )
+            for x in zip(*([iter([int(i) for i in NUMBER.findall(sample)])] * 4))
         )
         for sample in samples.split("\n\n")
     ]
-    tests = [
-        [int(i) for i in NUMBER.findall(test)] for test in tests.split("\n")
-    ]
+    tests = [[int(i) for i in NUMBER.findall(test)] for test in tests.split("\n")]
     return samples, tests
 
 
@@ -48,10 +44,7 @@ def apply_op(op, a, b, c, r):
 
 def part_1(samples):
     return sum(
-        sum(
-            apply_op(op, *instructions[1:], before[:]) == after
-            for op in OPS.values()
-        )
+        sum(apply_op(op, *instructions[1:], before[:]) == after for op in OPS.values())
         >= 3
         for before, instructions, after in samples
     )

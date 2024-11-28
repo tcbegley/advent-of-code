@@ -1,16 +1,35 @@
-
 [build-system]
-build-backend = "setuptools.build_meta"
-requires = ["setuptools>=42", "wheel", "setuptools_scm[toml]>=3.4"]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
-[tool.black]
-target-version = ["py310"]
-line-length = 88
+[project]
+name = "advent-of-code"
+version = "0.1.0"
+authors = [{ name = "tcbegley", email = "tomcbegley@gmail.com" }]
+description = "Helper library for scaffolding my Advent of Code solutions"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = ["aocd>=0.1", "typer[all]>=0.13.1"]
 
-[tool.isort]
-ensure_newline_before_comments = true
-force_grid_wrap = 0
-include_trailing_comma = true
-line_length = 88
-multi_line_output = 3
-use_parentheses = true
+[project.urls]
+"Source code" = "https://github.com/tcbegley/advent-of-code"
+
+[project.scripts]
+aoc = "advent_of_code:app"
+
+[tool.ruff]
+target-version = "py310"
+
+[tool.ruff.lint]
+select = [
+    # pyflakes
+    "F",
+    # Pycodestyle
+    "E",
+    "W",
+    # isort
+    "I001",
+]
+
+[tool.uv]
+dev-dependencies = ["ipython>=8.27.0", "pyright>=1.1.381", "ruff>=0.6.5"]
