@@ -38,9 +38,7 @@ def get_time_asleep(logs):
 def part_1(logs):
     time_asleep = get_time_asleep(logs)
 
-    most_asleep = max(
-        time_asleep, key=lambda guard: time_asleep[guard].total()
-    )
+    most_asleep = max(time_asleep, key=lambda guard: time_asleep[guard].total())
     time_most_asleep = max(
         time_asleep[most_asleep],
         key=lambda minute: time_asleep[most_asleep][minute],

@@ -83,9 +83,7 @@ def part_1(track, carts):
     while True:
         for cart in sorted(carts, key=lambda c: (c.loc[1], c.loc[0])):
             cart.move(track)
-            if any(
-                cart2.loc == cart.loc for cart2 in carts if cart is not cart2
-            ):
+            if any(cart2.loc == cart.loc for cart2 in carts if cart is not cart2):
                 return cart.loc
 
 

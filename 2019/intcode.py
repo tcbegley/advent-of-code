@@ -50,16 +50,12 @@ class IntCodeComputer:
 
     def add(self, modes):
         a, b, loc = self.program[self._c + 1 : self._c + 4]
-        self.program[loc] = self.get_value(a, modes[0]) + self.get_value(
-            b, modes[1]
-        )
+        self.program[loc] = self.get_value(a, modes[0]) + self.get_value(b, modes[1])
         self._c += 4
 
     def multiply(self, modes):
         a, b, loc = self.program[self._c + 1 : self._c + 4]
-        self.program[loc] = self.get_value(a, modes[0]) * self.get_value(
-            b, modes[1]
-        )
+        self.program[loc] = self.get_value(a, modes[0]) * self.get_value(b, modes[1])
         self._c += 4
 
     def get_input(self, modes):

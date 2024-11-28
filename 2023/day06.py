@@ -8,9 +8,10 @@ NUMBER = re.compile(r"\d+")
 def load_data(path):
     with open(path) as f:
         time, distance = f.read().strip().split("\n")
-    time, distance = [int(n) for n in NUMBER.findall(time)], [
-        int(n) for n in NUMBER.findall(distance)
-    ]
+    time, distance = (
+        [int(n) for n in NUMBER.findall(time)],
+        [int(n) for n in NUMBER.findall(distance)],
+    )
     return time, distance
 
 

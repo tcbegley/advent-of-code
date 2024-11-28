@@ -46,8 +46,7 @@ def solve(init_state, rules, n=20):
 
         left += 2
         state = "".join(
-            rules.get(state[i - 2 : i + 3], ".")
-            for i in range(2, len(state) - 2)
+            rules.get(state[i - 2 : i + 3], ".") for i in range(2, len(state) - 2)
         )
 
     return score(state, left)

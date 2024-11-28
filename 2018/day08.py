@@ -28,9 +28,7 @@ def parse_node(data):
 
 
 def sum_metadata(node):
-    return sum(node.metadata) + sum(
-        sum_metadata(child) for child in node.children
-    )
+    return sum(node.metadata) + sum(sum_metadata(child) for child in node.children)
 
 
 def part_1(root):

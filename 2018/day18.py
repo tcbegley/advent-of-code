@@ -15,7 +15,7 @@ def load_data(path):
 
 
 def get_neighbours(loc):
-    for (dr, dc) in product((-1, 0, 1), (-1, 0, 1)):
+    for dr, dc in product((-1, 0, 1), (-1, 0, 1)):
         if dr == 0 and dc == 0:
             continue
         yield (loc[0] + dr, loc[1] + dc)
@@ -53,9 +53,9 @@ def simulate(m, n=10):
                 else:
                     next_m[loc] = "|"
             elif char == "#":
-                if any(
-                    m.get(nbr) == "#" for nbr in get_neighbours(loc)
-                ) and any(m.get(nbr) == "|" for nbr in get_neighbours(loc)):
+                if any(m.get(nbr) == "#" for nbr in get_neighbours(loc)) and any(
+                    m.get(nbr) == "|" for nbr in get_neighbours(loc)
+                ):
                     next_m[loc] = "#"
                 else:
                     next_m[loc] = "."

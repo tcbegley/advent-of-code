@@ -43,7 +43,7 @@ def answer(path):
 
     intersection = set(locs1) & set(locs2)
 
-    return min([locs1[l] + locs2[l] for l in intersection])
+    return min([locs1[loc] + locs2[loc] for loc in intersection])
 
 
 if __name__ == "__main__":

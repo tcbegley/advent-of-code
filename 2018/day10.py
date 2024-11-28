@@ -18,10 +18,7 @@ class Particle:
 
 def load_data(path):
     with open(path) as f:
-        data = [
-            map(int, NUMBER.findall(row))
-            for row in f.read().strip().split("\n")
-        ]
+        data = [map(int, NUMBER.findall(row)) for row in f.read().strip().split("\n")]
     return [Particle((x, y), (vx, vy)) for x, y, vx, vy in data]
 
 
@@ -35,8 +32,7 @@ def visualise(particles, t):
 
     return "\n" + "\n".join(
         "".join(
-            "#" if (x, y) in particle_lookup else "."
-            for x in range(minx, maxx + 1)
+            "#" if (x, y) in particle_lookup else "." for x in range(minx, maxx + 1)
         )
         for y in range(miny, maxy + 1)
     )
