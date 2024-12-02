@@ -1,6 +1,6 @@
 # advent-of-code
 
-My solutions to various [advent of code](http://adventofcode.com/) problems.
+My solutions to various [advent of code][aoc] problems.
 Written for Python 3.10+.
 
 ## Generate boilerplate
@@ -29,22 +29,21 @@ uv run aoc 2021 1 --outdir path/to/solutions
 
 ## Linting / formatting code
 
-Code is formatted and linted with `ruff` and `pyright`. Run
+Code is formatted and linted with `ruff` and `pyright`. There are tasks for running the commands wth [`just`][just]:
 
 ```sh
-uv run ruff check
-uv run ruff format --check
-uv run pyright .
+just lint
 ```
 
 to lint all code and
 
 ```sh
-uv run ruff check --fix
-uv run ruff format
+just format
 ```
 
 to fix problems that can be fixed automatically.
 
+[aoc]: http://adventofcode.com/
 [aocd]: https://github.com/wimglenn/advent-of-code-data
+[just]: https://github.com/casey/just
 [uv]: https://docs.astral.sh/uv
