@@ -1,34 +1,15 @@
 import sys
 
-r0 = r2 = r3 = r4 = r5 = 0
-
-# r2 = 0
+# r0 = r1 = r2 = r3 = r4 = r5 = 0
 
 # r5 = r2 | 2 ** 16
-
+# r2 = 4_843_319 + (r5 & 255)
+# r2 &= 16_777_215  # = 2^24 - 1
+# r2 *= 65_899
+# r2 &= 16_777_215  # = 2^24 - 1
 
 # if 256 > r5:
-#     if r2 == 0:
-#         terminate
-#     goto 5
-
-# else:
-#     stuck!
-
-
-def part_1_alt():
-    while True:
-        print(f"{r2=}, {r5=}")
-        r5 = r2 | 2**16
-
-        r2 = 4843319 + r5 & (2**8 - 1)
-        r2 &= 16777215
-        r2 *= 65899
-        r2 &= 16777215
-
-        assert 256 > r5
-        if r2 == 0:
-            break
+#     r1 = 7
 
 
 OPS = {
@@ -65,11 +46,12 @@ def load_data(path):
 def part_1(data):
     (cmd, idx), *data = data
     registers = [0] * 6
+    registers[0] = 121_597
 
     steps = 0
     ip = registers[idx]
 
-    while steps < 1000:
+    while steps < 10_000000:
         print(registers)
         registers[idx] = ip
         cmd, (a, b, c) = data[ip]
