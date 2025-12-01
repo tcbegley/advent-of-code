@@ -39,7 +39,7 @@ def process(s):
     s = s.split(" ")
     res, i = s[0], 1
     while i < len(s) - 1:
-        res = eval(f"{res}{s[i]}{s[i+1]}")
+        res = eval(f"{res}{s[i]}{s[i + 1]}")
         i += 2
 
     return res
