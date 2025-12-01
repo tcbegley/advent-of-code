@@ -8,8 +8,11 @@ version = "0.1.0"
 authors = [{ name = "tcbegley", email = "tomcbegley@gmail.com" }]
 description = "Helper library for scaffolding my Advent of Code solutions"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.14"
 dependencies = ["aocd>=0.1", "typer[all]>=0.13.1"]
+
+[dependency-groups]
+dev = ["ipdb>=0.13.13", "ipython>=8.27.0", "pyright>=1.1.381", "ruff>=0.6.5"]
 
 [project.urls]
 "Source code" = "https://github.com/tcbegley/advent-of-code"
@@ -18,7 +21,7 @@ dependencies = ["aocd>=0.1", "typer[all]>=0.13.1"]
 aoc = "advent_of_code:app"
 
 [tool.ruff]
-target-version = "py310"
+target-version = "py314"
 line-length = 88
 
 [tool.ruff.lint]
@@ -30,12 +33,4 @@ select = [
     "W",
     # isort
     "I001",
-]
-
-[tool.uv]
-dev-dependencies = [
-    "ipdb>=0.13.13",
-    "ipython>=8.27.0",
-    "pyright>=1.1.381",
-    "ruff>=0.6.5",
 ]
