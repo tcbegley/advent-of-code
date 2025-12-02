@@ -1,30 +1,30 @@
 # advent-of-code
 
 My solutions to various [advent of code][aoc] problems.
-Written for Python 3.10+.
+Written for Python 3.13+.
 
 ## Generate boilerplate
 
 This repo contains a helper package to generate boilerplate code each day and
 fetch data. To use it first follow the instructions for authenticating
-[advent-of-code-data][aocd], and [uv][uv].
+[advent-of-code-data][aocd], and installing [uv][uv].
 
 Boilerplate can be generated and data fetched with
 
 ```sh
-uv run aoc
+uv run ac
 ```
 
 or for a specific year and day
 
 ```sh
-uv run aoc 2021 1
+uv run ac 2021 1
 ```
 
 Specify the location with the `--outdir` option
 
 ```sh
-uv run aoc 2021 1 --outdir path/to/solutions
+uv run ac 2021 1 --outdir path/to/solutions
 ```
 
 ## Linting / formatting code

@@ -18,7 +18,7 @@ dev = ["ipdb>=0.13.13", "ipython>=8.27.0", "pyright>=1.1.381", "ruff>=0.6.5"]
 "Source code" = "https://github.com/tcbegley/advent-of-code"
 
 [project.scripts]
-get-aoc = "advent_of_code:app"
+ac = "advent_of_code:app"
 
 [tool.ruff]
 target-version = "py313"
