@@ -2,14 +2,25 @@ import sys
 
 # r0 = r1 = r2 = r3 = r4 = r5 = 0
 
-# r5 = r2 | 2 ** 16
-# r2 = 4_843_319 + (r5 & 255)
-# r2 &= 16_777_215  # = 2^24 - 1
-# r2 *= 65_899
-# r2 &= 16_777_215  # = 2^24 - 1
+# while True:
+#     r5 = r2 | 2 ** 16
+#     r2 = 4_843_319 + (r5 & 255)
+#     r2 &= 16_777_215  # = 2^24 - 1
+#     r2 *= 65_899
+#     r2 &= 16_777_215  # = 2^24 - 1
 
-# if 256 > r5:
-#     r1 = 7
+#     if r5 < 256:
+#         if r0 == r2:
+#             print("success!")
+#             break
+#         else:
+#             continue
+#     else:
+#         r4 = 0
+#         while True:
+#             r3 = 256 * (r4 + 1)
+#             if 256 * (r4 + 1) > r5:
+#                 r5 = r4
 
 
 OPS = {
@@ -46,15 +57,16 @@ def load_data(path):
 def part_1(data):
     (cmd, idx), *data = data
     registers = [0] * 6
-    registers[0] = 121_597
 
     steps = 0
     ip = registers[idx]
 
-    while steps < 10_000000:
-        print(registers)
+    while steps < 10_000_000:
         registers[idx] = ip
         cmd, (a, b, c) = data[ip]
+        if cmd == "eqrr":
+            print(steps)
+            return registers[2]
         registers[c] = OPS[cmd](a, b, registers)
         ip = registers[idx]
         ip += 1
@@ -62,10 +74,35 @@ def part_1(data):
 
 
 def part_2(data):
-    pass
+    (cmd, idx), *data = data
+    registers = [0] * 6
+
+    steps = 0
+    ip = registers[idx]
+
+    last_value = None
+    seen = set()
+
+    while steps < 1_000_000_000:
+        registers[idx] = ip
+        cmd, (a, b, c) = data[ip]
+        if cmd == "eqrr":
+            print("Hit eqrr")
+            val = registers[2]
+            if val in seen:
+                return last_value
+            seen.add(val)
+            last_value = val
+        registers[c] = OPS[cmd](a, b, registers)
+        ip = registers[idx]
+        ip += 1
+        steps += 1
+
+    print(len(seen))
 
 
 if __name__ == "__main__":
     data = load_data(sys.argv[1])
     print(f"Part 1: {part_1(data)}")
+    data = load_data(sys.argv[1])
     print(f"Part 2: {part_2(data)}")
