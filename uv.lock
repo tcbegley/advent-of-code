@@ -24,7 +24,7 @@ dev = [
 requires-dist = [
     { name = "aocd", specifier = ">=0.1" },
     { name = "ruff", specifier = ">=0.14.7" },
-    { name = "typer", extras = ["all"], specifier = ">=0.13.1" },
+    { name = "typer", specifier = ">=0.13.1" },
 ]
 
 [package.metadata.requires-dev]
