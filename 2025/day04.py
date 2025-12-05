@@ -21,36 +21,35 @@ def get_neighbours(grid, r, c):
 
 def accessible_roll(grid, r, c):
     return (
-        data[r][c] == "@"
-        and sum(data[nr][nc] == "@" for nr, nc in get_neighbours(data, r, c)) < 4
+        grid[r][c] == "@"
+        and sum(grid[nr][nc] == "@" for nr, nc in get_neighbours(grid, r, c)) < 4
     )
 
 
-def part_1(data):
+def part_1(grid):
     return sum(
-        accessible_roll(data, r, c)
-        for r in range(len(data))
-        for c in range(len(data[0]))
+        accessible_roll(grid, r, c)
+        for r in range(len(grid))
+        for c in range(len(grid[0]))
     )
 
 
-def part_2(data):
+def part_2(grid):
     count = 0
 
     while True:
         count_iter = 0
 
-        for r in range(len(data)):
-            for c in range(len(data[0])):
-                if accessible_roll(data, r, c):
+        for r in range(len(grid)):
+            for c in range(len(grid[0])):
+                if accessible_roll(grid, r, c):
                     data[r][c] = "."
-                    count += 1
                     count_iter += 1
 
         if count_iter == 0:
-            break
+            return count
 
-    return count
+        count += count_iter
 
 
 if __name__ == "__main__":
